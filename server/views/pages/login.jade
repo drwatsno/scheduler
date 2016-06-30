@@ -1,0 +1,15 @@
+extends ../layouts/layout
+
+block content
+  .row
+    .col-md-12
+      h1 Login:
+      ul.list-inline.list-unstyled
+        each provider, name in providers
+          li
+            unless provider.link
+              a.btn.btn-primary(href="#{provider.authPath}") Login with #{provider.provider}
+      br
+      if (messages.error)
+        p
+          span(style="color:red")= messages.error

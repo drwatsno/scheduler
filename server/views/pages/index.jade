@@ -1,0 +1,15 @@
+extends ../layouts/layout
+
+block content
+
+  h1 Scheduler
+
+    h2 Status
+
+      p= status
+
+    h2 Passport providers
+    ul
+      each provider, name in providers
+        li
+          a.btn.btn-primary(href="#{provider.authPath}") #{provider.link ? "Link" : "Login"} with #{provider.provider}
