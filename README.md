@@ -1,3 +1,3 @@
-# Schedulr
+# schedulr
 
-Schedulr !
+a [Sails](http://sailsjs.org) application

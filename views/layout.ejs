@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Scheduler</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/styles/importer.css">
+    <script src="/js/dependencies/sails.io.js" defer></script>
+  </head>
+
+  <body class="sch-r">
+  <header class="sch-b_header">
+    <div class="sch-b_logo">
+      <a href="/" class="sch-b_logo--link"></a>
+    </div>
+    <div class="sch-b_menu">
+
+    </div>
+    <div class="sch-b_auth-block">
+     <% if (req.path!='/login') {%>
+        <% if (req.isAuthenticated()) { %>
+        <div class="sch-b_user-menu">
+          <div class="user-menu--user-link">
+            <a href="/user/profile"><%= req.user.name %></a>
+          </div>
+        </div>
+        <% } else { %>
+          <div class="sch-e_signup-link"><a href="/signup">Sign up</a></div>
+          <div class="sch-e_login-link"><a href="/login">Login</a></div>
+        <% } %>
+      <% } %>
+    </div>
+  </header>
+  <main class="sch-b_main">
+    <%- body %>
+  </main>
+  <footer class="sch-b_footer">
+    <div class="sch-b_footer-copylefts">
+
+    </div>
+  </footer>
+  </body>
+</html>
