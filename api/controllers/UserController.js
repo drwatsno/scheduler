@@ -9,7 +9,7 @@ var passport = require('passport');
 
 module.exports = {
 	view: function (req, res) {
-    res.send(req.user);
+    res.redirect('/');
   }
 };
 
