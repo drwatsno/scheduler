@@ -25,16 +25,14 @@ html {
   height: 4vmax;
   min-height: 7vh;
 }
-
 .sch-b_main {
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
 }
-
 .sch-b_footer {
   display: flex;
 }
-
 .sch-b_logo {
   background: url(/templates/sh-logo.svg) no-repeat 50% 50%;
   width: 13vmax;
@@ -48,19 +46,70 @@ html {
     height: 100%;
   }
 }
-
+.sch-b_content-centered {
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: center;
+}
+.sch-b_account-actions-form {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding: 20px;
+  background: #ececec;
+  border-radius: 10px;
+}
 .sch-b_menu {
   display: flex;
   flex-grow: 1;
 }
-
 .sch-b_auth-block {
   display: flex;
   font-size: 1.3rem;
 }
+.sch-b_form {
+  display: flex;
+  flex-direction: column;
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    label {
+      display: flex;
+    }
+    input {
+      display: flex;
+    }
+  }
+  .form-actions {
+    display: flex;
+  }
+}
+.sch-b_user-menu {
+  display: flex;
+  align-items: center;
+  .user-menu--user-link {
+    display: flex;
+    padding: 0 1vmax;
+    a {
+      color: #fff;
+      text-decoration: none;
+    }
+  }
+}
 
 // ELEMENTS
 
+.sch-e_input-text {
+  margin: 1em 0;
+  outline: none;
+  border: 1px solid #ccc;
+  padding: 0.5em;
+  &.autoform-invalid {
+    border-color: #FF0000;
+    background: rgba(255,0,0,0.2);
+  }
+}
 .sch-e_login-link, .sch-e_signup-link {
   display: flex;
   a {
@@ -75,4 +124,28 @@ html {
     }
   }
 }
-
+.sch-e_block-header {
+  display: flex;
+  margin: 0;
+  margin-bottom: 4vh;
+  font-size: 2em;
+}
+.sch-e_green-button {
+  display: flex;
+  background: #00c300;
+  color: #fff;
+  outline: none;
+  border: none;
+  font-size: 1.4em;
+  padding: 0.3em 1em;
+  border-radius: 5px;
+  &:not([disabled]) {
+    &:hover {
+      background: #00eb00;
+      cursor: pointer;
+    }
+  }
+  &[disabled] {
+    background: #cccccc;
+  }
+}
