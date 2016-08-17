@@ -44,6 +44,11 @@ module.exports = {
       unique: true,
       email: true
     },
+    events: {
+      collection: 'event',
+      via: 'team',
+      dominant: true
+    },
     toJSON: function() {
       var obj = this.toObject();
       delete obj.password;
