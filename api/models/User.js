@@ -49,6 +49,11 @@ module.exports = {
       via: 'team',
       dominant: true
     },
+    talks: {
+      collection: 'talk',
+      via: 'speakers',
+      dominant: true
+    },
     toJSON: function() {
       var obj = this.toObject();
       delete obj.password;

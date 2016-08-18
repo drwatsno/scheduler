@@ -20,19 +20,27 @@ module.exports = {
     },
     name: {
       type: 'string',
+      unique: false,
+      required: true,
+    },
+    description: {
+      type: 'text',
       unique: false
     },
     startDate: {
       type: 'datetime',
-      unique: false
+      unique: false,
+      required: true
     },
     endDate: {
       type: 'datetime',
-      unique: false
+      unique: false,
+      required: true
     },
-    speaker: {
-      type: 'user',
-      unique: false
+    speakers: {
+      collection: 'user',
+      via: 'talks',
+      required: true
     },
     track: {
       type: 'track',

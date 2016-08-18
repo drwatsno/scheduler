@@ -20,15 +20,18 @@ module.exports = {
     },
     name: {
       type: 'string',
-      unique: false
+      unique: false,
+      required: true
     },
     startDate: {
       type: 'datetime',
-      unique: false
+      unique: false,
+      required: true
     },
     endDate: {
       type: 'datetime',
-      unique: false
+      unique: false,
+      required: true
     },
     team: {
       collection: 'user',

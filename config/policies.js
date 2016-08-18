@@ -52,5 +52,10 @@ module.exports.policies = {
   'UserController': {
     '*': true,
     '/': 'isAuthenticated'
+  },
+
+  'EventController': {
+    '*': true,
+    '/create': 'isAuthenticated'
   }
 };

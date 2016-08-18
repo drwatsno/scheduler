@@ -6,6 +6,10 @@
  */
 
 module.exports = {
-	
+  view: function (req, res) {
+    return res.json({
+      message: 'Event.view not implemented'
+    });
+  }
 };
 
