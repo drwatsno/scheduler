@@ -45,12 +45,14 @@ module.exports.routes = {
   },
 
   'post /login': 'AuthController.login',
-
   '/logout': 'AuthController.logout',
+
+  // Registration
 
   'get /signup': {
     view: 'signup'
   },
+  'post /user': 'AuthController.signUp',
 
   /***************************************************************************
   *                                                                          *

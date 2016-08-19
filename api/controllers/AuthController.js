@@ -23,14 +23,27 @@ module.exports = {
 
     passport.authenticate('local', function(err, user, info) {
       if ((err) || (!user)) {
-        return res.send({
-          message: info.message,
-          user: user
+        return res.view('message',{
+          message: {
+            type: 'error',
+            name: 'Login error',
+            content: info.message
+          }
         });
       }
-      req.logIn(user, function(err) {
-        if (err) res.send(err);
-        res.redirect('/user');
+      req.logIn(user, function(error) {
+        if (err) res.serverError(error);
+        return res.view('message', {
+          message: {
+            type: 'success',
+            name: 'Logged in successfully',
+            content: `Successfully logged in as ${user.name}
+                <div class="sch-b_content-link-blocks">
+                  <a class="sch-e_content-link-block" href="/">Return to main</a>
+                  <a class="sch-e_content-link-block" href="/user">My profile</a>
+                </div>`
+          }
+        });
       });
 
     })(req, res);
@@ -44,5 +57,38 @@ module.exports = {
   logout: function(req, res) {
     req.logout();
     res.redirect('/');
+  },
+
+  /**
+   * sign up
+   * @param req
+   * @param res
+     */
+  signUp: function (req, res) {
+     User.create(req.body).exec(function (error, user) {
+
+       if (error) {
+         return res.serverError(error);
+       }
+
+       req.logIn(user, function(error) {
+         if (error) {
+           return res.serverError(error);
+         }
+         res.view('message',{
+           message: {
+             type: 'success',
+             name: "Successfully signed up",
+             content:
+               `Registered user with name ${user.name} and email ${user.email}<br>
+                <div class="sch-b_content-link-blocks">
+                  <a class="sch-e_content-link-block" href="/">Return to main</a>
+                  <a class="sch-e_content-link-block" href="/user">My profile</a>
+                </div>`
+           }
+         });
+       });
+
+     });
   }
 };

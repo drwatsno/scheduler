@@ -1,1 +1,28 @@
-<%= req.user.name %>
+<div class="sch-b-content--default">
+  <h1><%= req.user.name %>'s profile</h1>
+
+  <div class="sch-b_user-profile">
+      <div class="sch-b_name-value-table">
+          <!-- -->
+          <div class="table-item">
+            <div class="item-name">
+              User name
+            </div>
+            <div class="item-value">
+              <%= req.user.name %>
+            </div>
+          </div>
+        <!-- -->
+        <!-- -->
+        <div class="table-item">
+          <div class="item-name">
+            User e-mail
+          </div>
+          <div class="item-value">
+            <%= req.user.email %>
+          </div>
+        </div>
+        <!-- -->
+      </div>
+  </div>
+</div>
