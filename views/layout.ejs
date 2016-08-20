@@ -20,6 +20,9 @@
         <% if (req.isAuthenticated()) { %>
         <div class="sch-b_user-menu">
           <div class="user-menu--user-link">
+            <a href="/logout">Logout</a>
+          </div>
+          <div class="user-menu--user-link">
             <a href="/user"><%= req.user.name %></a>
           </div>
         </div>

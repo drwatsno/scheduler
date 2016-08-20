@@ -14,7 +14,7 @@ module.exports = {
         // locals
       })
     } else {
-      res.redirect('/');
+      res.redirect('/login');
     }
   }
 };
