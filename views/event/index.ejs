@@ -1,2 +1,9 @@
-<!-- keep -->
-Show all user events
+<div class="sch-b-content--default">
+  <h1>All my events</h1>
+  <% for (event of events) {%>
+    Event name: <%= event.name %><br>
+    Start date: <%= event.startDate %><br>
+    End date: <%= event.endDate%>
+    <br><br>
+  <%}%>
+ </div>

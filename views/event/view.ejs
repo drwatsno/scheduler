@@ -1,0 +1,50 @@
+<div class="sch-b-content--default">
+  <h1><%= event.name %></h1>
+
+  <div class="sch-b_user-profile">
+      <div class="sch-b_name-value-table">
+          <!-- -->
+          <div class="table-item">
+            <div class="item-name">
+              Event name
+            </div>
+            <div class="item-value">
+              <%= event.name %>
+            </div>
+          </div>
+        <!-- -->
+        <!-- -->
+        <div class="table-item">
+          <div class="item-name">
+            Event start date
+          </div>
+          <div class="item-value">
+            <%= event.startDate %>
+          </div>
+        </div>
+        <!-- -->
+        <!-- -->
+        <div class="table-item">
+          <div class="item-name">
+            Event end date
+          </div>
+          <div class="item-value">
+            <%= event.endDate %>
+          </div>
+        </div>
+        <!-- -->
+        <!-- -->
+        <div class="table-item">
+          <div class="item-name">
+            Event team
+          </div>
+          <div class="item-value">
+            <% for (member of event.team) { %>
+              <%= member.name %><br>
+            <%}%>
+          </div>
+        </div>
+        <!-- -->
+      </div>
+  </div>
+</div>
