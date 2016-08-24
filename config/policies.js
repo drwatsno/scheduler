@@ -56,6 +56,7 @@ module.exports.policies = {
 
   'EventController': {
     '*': true,
-    '/create': 'isAuthenticated'
+    create: 'isAuthenticated',
+    showCreateForm: 'isAuthenticated'
   }
 };

@@ -52,30 +52,14 @@ module.exports = {
   },
 
   /**
-   * show create event form
-   * redirect to login if not authenticated
+   * creates user
    * @param req
    * @param res
      */
   create: function (req, res) {
     if (req.isAuthenticated()) {
-      if (req.body) {
-        Event.create({
-          name: req.body.name,
-          startDate: req.body.start_date,
-          endDate: req.body.end_date
-        }).exec(function (error, event) {
-          if (error) {
-            res.serverError(error);
-          }
-
-          event.team.add([req.user.id]);
-          event.save(function (error) {
-            if (error) {
-              res.serverError(error);
-            }
-          });
-
+      Event.createForUser(req.body, req.user.id).then(
+        function (event) {
           return res.view('message',{
             message: {
               type: 'success',
@@ -83,18 +67,25 @@ module.exports = {
               content: `Successfully created event ${event.name}
                 <div class="sch-b_content-link-blocks">
                   <a class="sch-e_content-link-block" href="/event/${event.id}">Show event</a>
-                  <a class="sch-e_content-link-block" href="/user">Return to main</a>
+                  <a class="sch-e_content-link-block" href="/">Return to main</a>
                   <a class="sch-e_content-link-block" href="/user">My profile</a>
                 </div>`
             }
           })
+        },
+        function (error) {
+          return res.serverError(error);
         })
-      } else {
-        res.view('event/create');
-      }
+        .catch(function (error) {
+          return res.serverError(error);
+      })
     } else {
       res.redirect('/login');
     }
+  },
+
+  showCreateForm: function (req, res) {
+    res.view('event/create')
   }
 };
 

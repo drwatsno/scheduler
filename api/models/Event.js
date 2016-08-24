@@ -39,6 +39,39 @@ module.exports = {
       collection: 'user',
       via: 'events'
     }
+  },
+
+  /**
+   * Create event and and user with given userId as part of its team
+   * @param userId
+   * @param eventData
+     */
+  createForUser: function (eventData, userId) {
+    return new Promise(function (resolve, reject) {
+      Event.create({
+        name: eventData.name,
+        startDate: eventData.start_date,
+        endDate: eventData.end_date
+      })
+        .exec(function (error, event) {
+
+          if (error) {
+            reject(error);
+          }
+
+          if (event) {
+            event.team.add([userId]);
+            event.save(function (error) {
+              if (error) {
+                reject(error);
+              }
+            });
+            resolve(event);
+          }
+
+
+      })
+    })
   }
 };
 
