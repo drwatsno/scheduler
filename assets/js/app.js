@@ -1,6 +1,6 @@
 'use strict';
 requirejs.config({
-  baseUrl: 'js/modules'
+  baseUrl: '/js/modules'
 });
 
 requirejs(['sails.io', 'autoforms'],

@@ -37,11 +37,17 @@ module.exports = {
           message: {
             type: 'success',
             name: 'Logged in successfully',
-            content: `Successfully logged in as ${user.name}
-                <div class="sch-b_content-link-blocks">
-                  <a class="sch-e_content-link-block" href="/">Return to main</a>
-                  <a class="sch-e_content-link-block" href="/user">My profile</a>
-                </div>`
+            content: `Successfully logged in as ${user.name}`,
+            links: [
+              {
+                url: `/`,
+                name: `Return to main`
+              },
+              {
+                url: `/user`,
+                name: `My profile`
+              }
+            ]
           }
         });
       });
@@ -80,11 +86,17 @@ module.exports = {
              type: 'success',
              name: "Successfully signed up",
              content:
-               `Registered user with name ${user.name} and email ${user.email}<br>
-                <div class="sch-b_content-link-blocks">
-                  <a class="sch-e_content-link-block" href="/">Return to main</a>
-                  <a class="sch-e_content-link-block" href="/user">My profile</a>
-                </div>`
+               `Registered user with name ${user.name} and email ${user.email}`,
+             links: [
+               {
+                 url: `/`,
+                 name: `Return to main`
+               },
+               {
+                 url: `/user`,
+                 name: `My profile`
+               }
+             ]
            }
          });
        });

@@ -40,9 +40,37 @@ module.exports = {
 
     Event.find({id: eventId})
       .populate('team')
+      .populate('owner')
       .exec(function (error, events) {
         if (error) {
-          res.serverError(error);
+          return res.view('message',{
+            message: {
+              type: 'error',
+              name: 'Error',
+              content: error.details,
+              links: [
+                {
+                  url: `/`,
+                  name: `Return to main`
+                }
+              ]
+            }
+          })
+        }
+        if (!events||events.length<1) {
+          return res.view('message',{
+            message: {
+              type: 'error',
+              name: 'No such event',
+              content: `No event found with id ${eventId}`,
+              links: [
+                {
+                  url: `/`,
+                  name: `Return to main`
+                }
+              ]
+            }
+          })
         }
         console.log(events);
         return res.view('event/view',{
@@ -64,12 +92,21 @@ module.exports = {
             message: {
               type: 'success',
               name: `Successfully created event`,
-              content: `Successfully created event ${event.name}
-                <div class="sch-b_content-link-blocks">
-                  <a class="sch-e_content-link-block" href="/event/${event.id}">Show event</a>
-                  <a class="sch-e_content-link-block" href="/">Return to main</a>
-                  <a class="sch-e_content-link-block" href="/user">My profile</a>
-                </div>`
+              content: `Successfully created event ${event.name}`,
+                links: [
+                  {
+                    url: `/event/${event.id}`,
+                    name: `Show event`
+                  },
+                  {
+                    url: `/`,
+                    name: `Return to main`
+                  },
+                  {
+                    url: `/user`,
+                    name: `My profile`
+                  }
+                ]
             }
           })
         },

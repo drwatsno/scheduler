@@ -35,6 +35,10 @@ module.exports = {
       unique: false,
       required: true
     },
+    owner: {
+      model: 'user',
+      required: true
+    },
     team: {
       collection: 'user',
       via: 'events'
@@ -51,7 +55,8 @@ module.exports = {
       Event.create({
         name: eventData.name,
         startDate: eventData.start_date,
-        endDate: eventData.end_date
+        endDate: eventData.end_date,
+        owner: userId
       })
         .exec(function (error, event) {
 
@@ -65,11 +70,9 @@ module.exports = {
               if (error) {
                 reject(error);
               }
+              resolve(event);
             });
-            resolve(event);
           }
-
-
       })
     })
   }
