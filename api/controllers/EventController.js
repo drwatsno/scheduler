@@ -85,7 +85,6 @@ module.exports = {
    * @param res
      */
   create: function (req, res) {
-    if (req.isAuthenticated()) {
       Event.createForUser(req.body, req.user.id).then(
         function (event) {
           return res.view('message',{
@@ -115,10 +114,7 @@ module.exports = {
         })
         .catch(function (error) {
           return res.serverError(error);
-      })
-    } else {
-      res.redirect('/login');
-    }
+      });
   },
 
   showCreateForm: function (req, res) {
