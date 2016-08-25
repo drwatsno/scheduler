@@ -49,12 +49,26 @@ module.exports = function created (data, options) {
   // work, just send JSON.
   if (options.view) {
     return res.view(options.view, { data: viewData, title: 'Created' });
-  }
-
-  // If no second argument provided, try to serve the implied view,
-  // but fall back to sending JSON(P) if no view can be inferred.
-  else return res.guessView({ data: viewData, title: 'Created' }, function couldNotGuessView () {
-    return res.jsonx(data);
+  } else return res.view('message',{
+    message: {
+      type: 'success',
+      name: `Successfully created ${options.modelName}`,
+      content: `Successfully created ${options.modelName} ${data.name}`,
+      links: [
+        {
+          url: `/${options.modelName}/${data.id}`,
+          name: `Show ${options.modelName}`
+        },
+        {
+          url: `/`,
+          name: `Return to main`
+        },
+        {
+          url: `/user`,
+          name: `My profile`
+        }
+      ]
+    }
   });
 
 };

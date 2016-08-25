@@ -38,8 +38,6 @@ module.exports.routes = {
     view: 'homepage'
   },
 
-  'get /user': 'UserController.view',
-
   'get /login': {
     view: 'login'
   },
@@ -52,7 +50,7 @@ module.exports.routes = {
   'get /signup': {
     view: 'signup'
   },
-  'post /user': 'AuthController.signUp',
+  'post /signup': 'AuthController.signUp',
 
   /***************************************************************************
   *                                                                          *
@@ -64,6 +62,14 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
+  /***************************************************************************
+  *                                                                          *
+  *  User                                                                    *
+  *                                                                          *
+  ***************************************************************************/
+
+  'get /user': 'UserController.profile',
+  'get /user/:username/events': 'UserController.events',
 
   /***************************************************************************
   *                                                                          *
@@ -71,10 +77,10 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  'get /event': 'EventController.index',
   'get /event/create': 'EventController.showCreateForm',
-  'post /event/create': 'EventController.create',
+  'post /event/create': 'EventController.createEvent',
   'get /event/:id' : 'EventController.view',
+  'get /events' : 'EventController.index',
 
 
    /**************************************************************************

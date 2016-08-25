@@ -8,7 +8,10 @@
     <li><a href="/signup">/signup</a></li>
     <li><a href="/logout">/logout</a></li>
     <li><a href="/user">/user</a></li>
-    <li><a href="/event">/event</a></li>
+    <% if (req.isAuthenticated()) {%>
+    <li><a href="/user/<%= req.user.name%>/events">/My events</a></li>
+    <%}%>
+    <li><a href="/events">/All events</a></li>
     <li><a href="/event/create">/event/create</a></li>
     <li><a href="/talk">/talk</a></li>
     <li><a href="/talk/create">/talk/create</a></li>

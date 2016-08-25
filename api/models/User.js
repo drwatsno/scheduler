@@ -60,6 +60,46 @@ module.exports = {
       return obj;
     }
   },
+  
+  getUserById: function (userId) {
+    return new Promise(function (resolve, reject) {
+      User.findOne({id: userId}).exec(function (error, user) {
+        if (error) {
+          reject(error)
+        } else {
+          resolve(user)
+        }
+      })
+    })
+  },
+
+  getEventsByUserId: function (userId) {
+    return new Promise(function (resolve, reject) {
+      User.find({id: userId})
+        .populate('events')
+        .exec(function(error, user) {
+          if (error) {
+            reject(error)
+          } else {
+            resolve(user[0].events)
+          }
+        });
+    })
+  },
+
+  getEventsByUserName: function (userName) {
+    return new Promise(function (resolve, reject) {
+      User.find({name: userName})
+        .populate('events')
+        .exec(function(error, user) {
+          if (error) {
+            reject(error)
+          } else {
+            resolve(user[0].events)
+          }
+        });
+    })
+  },
 
   beforeCreate: function(values, callback) {
     bcrypt.genSalt(10, function(err, salt) {

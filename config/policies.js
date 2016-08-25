@@ -51,12 +51,13 @@ module.exports.policies = {
 
   'UserController': {
     '*': true,
-    '/': 'isAuthenticated'
+    profile: 'isAuthenticated',
+    events: 'isAuthenticated'
   },
 
   'EventController': {
     '*': true,
-    create: 'isAuthenticated',
+    createEvent: 'isAuthenticated',
     showCreateForm: 'isAuthenticated'
   }
 };

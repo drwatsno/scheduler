@@ -1,5 +1,5 @@
 <div class="sch-b-content--default">
-  <h1><%= event.name %></h1>
+  <h1><%= data.name %></h1>
 
   <div class="sch-b_user-profile">
       <div class="sch-b_name-value-table">
@@ -9,7 +9,7 @@
               Event name
             </div>
             <div class="item-value">
-              <%= event.name %>
+              <%= data.name %>
             </div>
           </div>
         <!-- -->
@@ -19,7 +19,7 @@
             Event start date
           </div>
           <div class="item-value">
-            <%= event.startDate %>
+            <%= data.startDate %>
           </div>
         </div>
         <!-- -->
@@ -29,7 +29,7 @@
             Event end date
           </div>
           <div class="item-value">
-            <%= event.endDate %>
+            <%= data.endDate %>
           </div>
         </div>
         <!-- -->
@@ -39,7 +39,7 @@
             Event planner (owner)
           </div>
           <div class="item-value">
-            <%= event.owner.name %>
+            <%= data.owner.name %>
           </div>
         </div>
         <!-- -->
@@ -49,7 +49,7 @@
             Event team
           </div>
           <div class="item-value">
-            <% for (member of event.team) { %>
+            <% for (member of data.team) { %>
               <%= member.name %><br>
             <%}%>
           </div>

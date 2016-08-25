@@ -6,108 +6,44 @@
  */
 
 module.exports = {
+
   /**
-   * list all User events
+   * all events
    * @param req
    * @param res
      */
   index: function (req, res) {
-    if (!req.isAuthenticated()) {
-      return res.redirect("/login");
-    }
-    User.find({id: req.user.id})
-        .populate('events')
-        .exec(function(error, user) {
-          console.log(user);
-          if (error) {
-            res.serverError(error);
-          }
-          res.view('event/index', {
-            events: user[0].events
-          });
-    });
-
+    Event.getAllEvents().then(function (events) {
+      res.ok(events,'event/index')
+    },function (error) {
+      res.serverError(error);
+    })
   },
 
   /**
-   * show one event
+   * Single event
    * @param req
    * @param res
-   * @returns {*}
      */
   view: function (req, res) {
-    var eventId = req.param('id');
+    var eventId = req.param("id")||null;
 
-    Event.find({id: eventId})
-      .populate('team')
-      .populate('owner')
-      .exec(function (error, events) {
-        if (error) {
-          return res.view('message',{
-            message: {
-              type: 'error',
-              name: 'Error',
-              content: error.details,
-              links: [
-                {
-                  url: `/`,
-                  name: `Return to main`
-                }
-              ]
-            }
-          })
-        }
-        if (!events||events.length<1) {
-          return res.view('message',{
-            message: {
-              type: 'error',
-              name: 'No such event',
-              content: `No event found with id ${eventId}`,
-              links: [
-                {
-                  url: `/`,
-                  name: `Return to main`
-                }
-              ]
-            }
-          })
-        }
-        console.log(events);
-        return res.view('event/view',{
-          event: events[0]
-        })
-      });
+    Event.getEventById(eventId).then(function (event) {
+      res.ok(event,'event/view');
+    }, function (error) {
+      res.serverError(error);
+    })
   },
 
   /**
-   * creates user
+   * creates event
    * @param req
    * @param res
      */
-  create: function (req, res) {
-      Event.createForUser(req.body, req.user.id).then(
+  createEvent: function (req, res) {
+      Event.createWithOwner(req.body, req.user.id).then(
         function (event) {
-          return res.view('message',{
-            message: {
-              type: 'success',
-              name: `Successfully created event`,
-              content: `Successfully created event ${event.name}`,
-                links: [
-                  {
-                    url: `/event/${event.id}`,
-                    name: `Show event`
-                  },
-                  {
-                    url: `/`,
-                    name: `Return to main`
-                  },
-                  {
-                    url: `/user`,
-                    name: `My profile`
-                  }
-                ]
-            }
-          })
+          return res.created(event,{modelName:'event'});
         },
         function (error) {
           return res.serverError(error);

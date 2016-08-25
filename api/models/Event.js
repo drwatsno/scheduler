@@ -46,17 +46,17 @@ module.exports = {
   },
 
   /**
-   * Create event and and user with given userId as part of its team
-   * @param userId
+   * Create event and add user with given userId as part of its team
+   * @param ownerId
    * @param eventData
      */
-  createForUser: function (eventData, userId) {
+  createWithOwner: function (eventData, ownerId) {
     return new Promise(function (resolve, reject) {
       Event.create({
         name: eventData.name,
         startDate: eventData.start_date,
         endDate: eventData.end_date,
-        owner: userId
+        owner: ownerId
       })
         .exec(function (error, event) {
 
@@ -65,7 +65,7 @@ module.exports = {
           }
 
           if (event) {
-            event.team.add([userId]);
+            event.team.add([ownerId]);
             event.save(function (error) {
               if (error) {
                 reject(error);
@@ -74,6 +74,50 @@ module.exports = {
             });
           }
       })
+    })
+  },
+
+  getAllEvents: function () {
+    return new Promise(function (resolve, reject) {
+      Event.find()
+        .populate('team')
+        .populate('owner')
+        .exec(function (error, events) {
+          if (error) {
+            reject(error)
+          } else {
+            if (!events||events.length<1) {
+              reject(new Error('No events'))
+            }
+            resolve(events)
+          }
+        });
+    });
+  },
+
+  getEventById: function (eventId) {
+    return new Promise(function (resolve, reject) {
+      Event.find({id: eventId})
+        .populate('team')
+        .populate('owner')
+        .exec(function (error, events) {
+          if (error) {
+            reject(error)
+          } else {
+            if (!events||events.length<1) {
+              reject(new Error('No such event'))
+            }
+            resolve(events[0])
+          }
+        });
+    });
+  },
+
+
+
+  addUserToTeam: function (eventId, userId) {
+    return new Promise(function (resolve, reject) {
+
     })
   }
 };

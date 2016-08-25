@@ -37,7 +37,7 @@ module.exports = function sendOK (data, options) {
   var viewData = data;
   if (!(viewData instanceof Error) && 'object' == typeof viewData) {
     try {
-      viewData = require('util').inspect(data, {depth: null});
+     // viewData = require('util').inspect(data, {depth: null});
     }
     catch(e) {
       viewData = undefined;
