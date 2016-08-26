@@ -6,9 +6,12 @@ requirejs.config({
 requirejs(['sails.io', 'autoforms'],
 
   function (sails, autoforms) {
-    var forms = document.getElementsByClassName("sch-b_form");
+    
+    sails.connect();
+    
+    var forms = document.getElementsByClassName("es-b_form");
 
-    for (let form of forms) {
+    [].slice.call(forms).forEach(function (form) {
       autoforms.init(form);
-    }
+    });
   });

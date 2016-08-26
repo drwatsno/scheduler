@@ -17,10 +17,19 @@ module.exports = {
    * environment (see config/connections.js and config/models.js )           *
    ***************************************************************************/
 
-  // models: {
-  //   connection: 'someMysqlServer'
-  // },
+  models: {
+    connection: 'someMongodbServer',
+    migrate: 'alter'
+  },
 
+  session: {
+    adapter: 'connect-mongo',
+    url: 'mongodb://localhost:27017/easyseo',
+    collection: 'sessions',
+    auto_reconnect: false,
+    ssl: false,
+    stringify: true
+  }
   /***************************************************************************
    * Set the port in the production environment to 80                        *
    ***************************************************************************/
