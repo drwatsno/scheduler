@@ -58,6 +58,7 @@ module.exports.policies = {
   'EventController': {
     '*': true,
     createEvent: 'isAuthenticated',
-    showCreateForm: 'isAuthenticated'
+    showCreateForm: 'isAuthenticated',
+    teamAddUser: ['isAuthenticated','isEventOwner']
   }
 };

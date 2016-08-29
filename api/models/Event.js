@@ -112,12 +112,41 @@ module.exports = {
         });
     });
   },
-
-
+  
+  getEventTeam: function (eventId) {
+    return new Promise(function (resolve, reject) {
+      Event.find({id: eventId})
+        .populate('team')
+        .exec(function (error, events) {
+          if (error) {
+            reject(error)
+          } else {
+            if (!events||events.length<1) {
+              reject(new Error('No such event'))
+            }
+            resolve(events[0].team)
+          }
+        })
+    })
+  },
 
   addUserToTeam: function (eventId, userId) {
     return new Promise(function (resolve, reject) {
-
+      Event.findOne({id: eventId})
+        .exec(function (error, event) {
+          if (error) {
+            reject(error)
+          } else {
+            event.team.add(userId);
+            event.save(function (error) {
+              if (error) {
+                reject(error)
+              } else {
+                resolve(event)
+              }
+            })
+          }
+        })
     })
   }
 };
