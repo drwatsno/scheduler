@@ -60,7 +60,7 @@ module.exports = {
       return obj;
     }
   },
-  
+
   getUserById: function (userId) {
     return new Promise(function (resolve, reject) {
       User.findOne({id: userId}).exec(function (error, user) {
@@ -105,7 +105,7 @@ module.exports = {
     bcrypt.genSalt(10, function(err, salt) {
       bcrypt.hash(values.password, salt, function(err, hash) {
         if (err) {
-          console.log(err);
+          sails.log(err);
           callback(err);
         } else {
           values.password = hash;

@@ -69,6 +69,7 @@ module.exports.routes = {
   ***************************************************************************/
 
   'get /user': 'UserController.profile',
+  'get /user/:id': 'UserController.profile',
   'get /user/:username/events': 'UserController.events',
 
   /***************************************************************************
@@ -80,6 +81,8 @@ module.exports.routes = {
   'get /event/create': 'EventController.createEvent',
   'post /event/create': 'EventController.createEvent',
   'get /event/:id' : 'EventController.view',
+  'get /event/:id/update': 'EventController.updateEvent',
+  'post /event/:id/update': 'EventController.updateEvent',
   'get /event/:id/team' : 'EventController.team',
   'get /event/:id/team/adduser' : 'EventController.teamAddUser',
   'post /event/:id/team/adduser' : 'EventController.teamAddUser',

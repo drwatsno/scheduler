@@ -81,7 +81,7 @@ module.exports.http = {
 
     // bodyParser: require('skipper')({strict: true})
 
-  },
+  }
 
   /***************************************************************************
   *                                                                          *

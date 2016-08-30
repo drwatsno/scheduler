@@ -1,7 +1,5 @@
 <div class="sch-b-content--default">
   <h1><%= data.name %></h1>
-
-  <div class="sch-b_user-profile">
       <div class="sch-b_name-value-table">
           <!-- -->
           <div class="table-item">
@@ -50,11 +48,20 @@
           </div>
           <div class="item-value">
             <% for (member of data.team) { %>
-              <%= member.name %><br>
+            <a href="/user/<%= member.id%>"><%= member.name %></a> <br>
             <%}%>
           </div>
         </div>
         <!-- -->
       </div>
-  </div>
+      <% if (permissions.isEventOwner(req, data.owner.id)) { %>
+      <%- partial('../partials/links.ejs',{
+        links : [
+        {
+          name:'Change event',
+          url:`${req.path}/update`
+        }
+       ]
+      })%>
+    <%}%>
 </div>

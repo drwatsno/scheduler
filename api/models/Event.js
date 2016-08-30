@@ -46,37 +46,9 @@ module.exports = {
   },
 
   /**
-   * Create event and add user with given userId as part of its team
-   * @param ownerId
-   * @param eventData
+   * returns all events
+   * @returns {Promise}
      */
-  createWithOwner: function (eventData, ownerId) {
-    return new Promise(function (resolve, reject) {
-      Event.create({
-        name: eventData.name,
-        startDate: eventData.start_date,
-        endDate: eventData.end_date,
-        owner: ownerId
-      })
-        .exec(function (error, event) {
-
-          if (error) {
-            reject(error);
-          }
-
-          if (event) {
-            event.team.add([ownerId]);
-            event.save(function (error) {
-              if (error) {
-                reject(error);
-              }
-              resolve(event);
-            });
-          }
-      })
-    })
-  },
-
   getAllEvents: function () {
     return new Promise(function (resolve, reject) {
       Event.find()
@@ -95,6 +67,11 @@ module.exports = {
     });
   },
 
+  /**
+   * returns event by its id
+   * @param eventId
+   * @returns {Promise}
+     */
   getEventById: function (eventId) {
     return new Promise(function (resolve, reject) {
       Event.find({id: eventId})
@@ -112,7 +89,12 @@ module.exports = {
         });
     });
   },
-  
+
+  /**
+   * returns team list objects
+   * @param eventId
+   * @returns {Promise}
+     */
   getEventTeam: function (eventId) {
     return new Promise(function (resolve, reject) {
       Event.find({id: eventId})
@@ -130,6 +112,12 @@ module.exports = {
     })
   },
 
+  /**
+   * Adds user to event team
+   * @param eventId
+   * @param userId
+   * @returns {Promise}
+     */
   addUserToTeam: function (eventId, userId) {
     return new Promise(function (resolve, reject) {
       Event.findOne({id: eventId})
@@ -148,6 +136,28 @@ module.exports = {
           }
         })
     })
+  },
+
+  /**
+   * All events has one team member (owner) after create
+   * @param event
+   * @param callback
+     */
+  afterCreate: function (event, callback) {
+    Event.findOne({id: event.id}).exec(function (error, event) {
+      if (error) {
+        callback(error);
+      }
+      event.team.add(event.owner);
+      event.save(function (error) {
+        if (error) {
+          callback(error);
+        } else {
+          callback();
+        }
+      });
+    });
+
   }
 };
 

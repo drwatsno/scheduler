@@ -1,5 +1,5 @@
 <div class="sch-b-content--default">
-  <h1><%= req.user.name %>'s profile</h1>
+  <h1><%= data.name %>'s profile</h1>
 
   <div class="sch-b_user-profile">
       <div class="sch-b_name-value-table">
@@ -9,7 +9,7 @@
               User name
             </div>
             <div class="item-value">
-              <%= req.user.name %>
+              <%= data.name %>
             </div>
           </div>
         <!-- -->
@@ -19,7 +19,7 @@
             User e-mail
           </div>
           <div class="item-value">
-            <%= req.user.email %>
+            <%= data.email %>
           </div>
         </div>
         <!-- -->

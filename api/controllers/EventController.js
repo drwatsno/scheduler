@@ -5,6 +5,9 @@
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
+permissions = require("../services/permissionHelpers");
+fields = require("../services/fieldsHelpers");
+
 module.exports = {
 
   /**
@@ -42,18 +45,48 @@ module.exports = {
      */
   createEvent: function (req, res) {
     if (req.body) {
-      Event.createWithOwner(req.body, req.user.id).then(
-        function (event) {
-          return res.created(event,{modelName:'event'});
-        },
-        function (error) {
+      Event.create({
+        name: req.body.name,
+        startDate: req.body.start_date,
+        endDate: req.body.end_date,
+        owner: req.user.id
+      }).exec(function (error, event) {
+        if (error) {
           return res.serverError(error);
-        })
-        .catch(function (error) {
-          return res.serverError(error);
-        });
+        } else {
+          return res.created(event,{modelName: 'event'});
+        }
+      })
     } else {
-      return res.view('event/create')
+      return res.view('event/form',{data:{title:'Create event'}})
+    }
+  },
+
+  updateEvent: function (req, res) {
+    if (req.body) {
+      Event.update({id: req.param("id")},{
+        name: req.body.name,
+        startDate: req.body.start_date,
+        endDate: req.body.end_date,
+        owner: req.user.id
+      }).exec(function (error, event) {
+        if (error) {
+          return res.serverError(error);
+        } else {
+          return res.created(event,{modelName: 'event'});
+        }
+      })
+    } else {
+      Event.getEventById(req.param("id")).then(function (event) {
+        return res.view('event/form', {
+          data: {
+            title: 'Update event',
+            fields: event
+          }
+        })
+      },function (error) {
+        res.serverError(error)
+      });
     }
   },
 

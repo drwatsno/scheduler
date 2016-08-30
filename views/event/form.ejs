@@ -1,0 +1,27 @@
+<div class="sch-b-content--default">
+  <h1><%= data.title %></h1>
+  <form class="sch-b_form" method="post">
+    <div class="form-field">
+      <label for="name">Event name</label>
+      <input type="text" id="name" name="name" class="sch-e_input-text" value="<%= fields.getValueOf(data.fields,'name') %>">
+    </div>
+
+    <div class="form-field">
+      <label for="start_date">Start Date</label>
+      <input type="date" id="start_date" name="start_date" class="sch-e_input-text" value="<%= fields.getValueOf(data.fields,'startDate') %>">
+    </div>
+
+    <div class="form-field">
+      <label for="end_date">End Date</label>
+      <input type="date" id="end_date" name="end_date" class="sch-e_input-text" value="<%= fields.getValueOf(data.fields,'endDate') %>">
+    </div>
+
+    <div class="form-actions">
+      <input type="submit" class="sch-e_green-button" value="<%= data.title %>">
+    </div>
+  </form>
+</div>
+
+<!--
+TODO: Format dates to format (yyyy-MM-dd) for date inputs
+ -->
