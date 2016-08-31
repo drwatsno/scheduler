@@ -140,6 +140,13 @@ code {
 .sch-b_content-link-blocks {
   margin: 5vmin 0;
 }
+.sch-b_form-warning {
+  display: flex;
+  .sch-e_green-button {
+    margin-right: 1em;
+    margin-top: 1em;
+  }
+}
 
 // ELEMENTS
 
@@ -178,6 +185,7 @@ code {
   background: #00c300;
   color: #fff;
   outline: none;
+  text-decoration: none;
   border: none;
   font-size: 1.4em;
   padding: 0.3em 1em;
@@ -203,6 +211,26 @@ code {
   cursor: pointer;
   &:hover {
     background: #5D5D5D;
+  }
+}
+.sch-e_taglink {
+  background: rgb(44, 107, 200);
+  color: #FFF;
+  padding: 0.2rem 0.7rem;
+  font-size: inherit;
+  display: inline-block;
+  vertical-align: top;
+  margin: 0.3rem 1rem;
+  text-decoration: none;
+  border-radius: 5px;
+  &:hover {
+    background: rgb(23, 58, 109);
+  }
+  &.mod-green {
+    background: #00c300;
+    &:hover {
+      background: #00eb00;
+    }
   }
 }
 

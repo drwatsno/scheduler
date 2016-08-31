@@ -103,10 +103,11 @@ module.exports = {
           if (error) {
             reject(error)
           } else {
-            if (!events||events.length<1) {
+            if (typeof events=='undefined'||events.length<1||typeof events[0].team =='undefined') {
               reject(new Error('No such event'))
+            } else {
+              resolve(events[0].team)
             }
-            resolve(events[0].team)
           }
         })
     })
@@ -125,14 +126,18 @@ module.exports = {
           if (error) {
             reject(error)
           } else {
-            event.team.add(userId);
-            event.save(function (error) {
-              if (error) {
-                reject(error)
-              } else {
-                resolve(event)
-              }
-            })
+            if (event) {
+              event.team.add(userId);
+              event.save(function (error) {
+                if (error) {
+                  reject(error)
+                } else {
+                  resolve(event)
+                }
+              })
+            } else {
+             res.notFound('no such event')
+            }
           }
         })
     })

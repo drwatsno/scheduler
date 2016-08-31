@@ -50,16 +50,19 @@ module.exports.policies = {
 	// }
 
   'UserController': {
-    '*': true,
+    '*': 'isAuthenticated',
     profile: 'isAuthenticated',
-    events: 'isAuthenticated'
+    events: 'isAuthenticated',
+    delete: false,
+    update: false
   },
 
   'EventController': {
-    '*': true,
-    createEvent: 'isAuthenticated',
-    updateEvent: ['isAuthenticated','isEventOwner'],
-    showCreateForm: 'isAuthenticated',
+    index: true,
+    view: true,
+    delete: ['isAuthenticated','isEventOwner'],
+    create: 'isAuthenticated',
+    update: ['isAuthenticated','isEventOwner'],
     teamAddUser: ['isAuthenticated','isEventOwner']
   }
 };

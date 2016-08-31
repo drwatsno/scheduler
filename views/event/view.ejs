@@ -37,7 +37,7 @@
             Event planner (owner)
           </div>
           <div class="item-value">
-            <%= data.owner.name %>
+            <a class="sch-e_taglink" href="/user/<%= data.owner.id%>"><%= data.owner.name %></a> <br>
           </div>
         </div>
         <!-- -->
@@ -48,7 +48,10 @@
           </div>
           <div class="item-value">
             <% for (member of data.team) { %>
-            <a href="/user/<%= member.id%>"><%= member.name %></a> <br>
+              <a class="sch-e_taglink" href="/user/<%= member.id%>"><%= member.name %></a>
+            <%}%>
+            <% if (permissions.isEventOwner(req, data.owner.id)) { %>
+              <a class="sch-e_taglink mod-green" href="<%=req.path%>/team/adduser">+</a>
             <%}%>
           </div>
         </div>
@@ -57,10 +60,14 @@
       <% if (permissions.isEventOwner(req, data.owner.id)) { %>
       <%- partial('../partials/links.ejs',{
         links : [
-        {
-          name:'Change event',
-          url:`${req.path}/update`
-        }
+          {
+            name:'Change event',
+            url:`${req.path}/update`
+          },
+          {
+            name: 'Delete event',
+            url:`${req.path}/delete`
+          }
        ]
       })%>
     <%}%>

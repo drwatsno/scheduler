@@ -78,11 +78,13 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  'get /event/create': 'EventController.createEvent',
-  'post /event/create': 'EventController.createEvent',
+  'get /event/create': 'EventController.create',
+  'post /event/create': 'EventController.create',
   'get /event/:id' : 'EventController.view',
-  'get /event/:id/update': 'EventController.updateEvent',
-  'post /event/:id/update': 'EventController.updateEvent',
+  'get /event/:id/update': 'EventController.update',
+  'post /event/:id/update': 'EventController.update',
+  'get /event/:id/delete': 'EventController.delete',
+  'post /event/:id/delete': 'EventController.delete',
   'get /event/:id/team' : 'EventController.team',
   'get /event/:id/team/adduser' : 'EventController.teamAddUser',
   'post /event/:id/team/adduser' : 'EventController.teamAddUser',
