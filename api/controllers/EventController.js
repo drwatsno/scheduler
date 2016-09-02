@@ -5,9 +5,6 @@
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
-permissions = require("../services/permissionHelpers");
-fields = require("../services/fieldsHelpers");
-
 module.exports = {
 
   /**

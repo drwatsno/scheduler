@@ -42,6 +42,10 @@ module.exports = {
     team: {
       collection: 'user',
       via: 'events'
+    },
+    isOwnedByCurrentUser(req) {
+      if (!req.user) return false;
+      return this.owner.id == req.user.id;
     }
   },
 

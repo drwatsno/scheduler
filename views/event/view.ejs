@@ -1,5 +1,6 @@
+<% var event = data %>
 <div class="sch-b-content--default">
-  <h1><%= data.name %></h1>
+  <h1><%= event.name %></h1>
       <div class="sch-b_name-value-table">
           <!-- -->
           <div class="table-item">
@@ -7,7 +8,7 @@
               Event name
             </div>
             <div class="item-value">
-              <%= data.name %>
+              <%= event.name %>
             </div>
           </div>
         <!-- -->
@@ -17,7 +18,7 @@
             Event start date
           </div>
           <div class="item-value">
-            <%= data.startDate %>
+            <%= event.startDate %>
           </div>
         </div>
         <!-- -->
@@ -27,7 +28,7 @@
             Event end date
           </div>
           <div class="item-value">
-            <%= data.endDate %>
+            <%= event.endDate %>
           </div>
         </div>
         <!-- -->
@@ -37,7 +38,7 @@
             Event planner (owner)
           </div>
           <div class="item-value">
-            <a class="sch-e_taglink" href="/user/<%= data.owner.id%>"><%= data.owner.name %></a> <br>
+            <a class="sch-e_taglink" href="/user/<%= event.owner.id%>"><%= event.owner.name %></a> <br>
           </div>
         </div>
         <!-- -->
@@ -47,17 +48,17 @@
             Event team
           </div>
           <div class="item-value">
-            <% for (member of data.team) { %>
+            <% for (member of event.team) { %>
               <a class="sch-e_taglink" href="/user/<%= member.id%>"><%= member.name %></a>
             <%}%>
-            <% if (permissions.isEventOwner(req, data.owner.id)) { %>
+            <% if (event.isOwnedByCurrentUser(req)) { %>
               <a class="sch-e_taglink mod-green" href="<%=req.path%>/team/adduser">+</a>
             <%}%>
           </div>
         </div>
         <!-- -->
       </div>
-      <% if (permissions.isEventOwner(req, data.owner.id)) { %>
+      <% if (event.isOwnedByCurrentUser(req)) { %>
       <%- partial('../partials/links.ejs',{
         links : [
           {
