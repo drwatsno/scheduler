@@ -21,7 +21,7 @@ module.exports = {
     name: {
       type: 'string',
       unique: false,
-      required: true,
+      required: true
     },
     description: {
       type: 'text',
@@ -43,8 +43,7 @@ module.exports = {
       required: true
     },
     track: {
-      type: 'track',
-      unique: false
+      model: 'track'
     }
   }
 };

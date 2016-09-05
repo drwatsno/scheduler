@@ -25,14 +25,14 @@ var passport = require('passport');
 module.exports.routes = {
 
   /***************************************************************************
-  *                                                                          *
-  * Make the view located at `views/homepage.ejs` (or `views/homepage.jade`, *
-  * etc. depending on your default view engine) your home page.              *
-  *                                                                          *
-  * (Alternatively, remove this and add an `index.html` file in your         *
-  * `assets` directory)                                                      *
-  *                                                                          *
-  ***************************************************************************/
+   *                                                                          *
+   * Make the view located at `views/homepage.ejs` (or `views/homepage.jade`, *
+   * etc. depending on your default view engine) your home page.              *
+   *                                                                          *
+   * (Alternatively, remove this and add an `index.html` file in your         *
+   * `assets` directory)                                                      *
+   *                                                                          *
+   ***************************************************************************/
 
   '/': {
     view: 'homepage'
@@ -53,45 +53,58 @@ module.exports.routes = {
   'post /signup': 'AuthController.signUp',
 
   /***************************************************************************
-  *                                                                          *
-  * Custom routes here...                                                    *
-  *                                                                          *
-  * If a request to a URL doesn't match any of the custom routes above, it   *
-  * is matched against Sails route blueprints. See `config/blueprints.js`    *
-  * for configuration options and examples.                                  *
-  *                                                                          *
-  ***************************************************************************/
+   *                                                                          *
+   * Custom routes here...                                                    *
+   *                                                                          *
+   * If a request to a URL doesn't match any of the custom routes above, it   *
+   * is matched against Sails route blueprints. See `config/blueprints.js`    *
+   * for configuration options and examples.                                  *
+   *                                                                          *
+   ***************************************************************************/
 
   /***************************************************************************
-  *                                                                          *
-  *  User                                                                    *
-  *                                                                          *
-  ***************************************************************************/
+   *                                                                          *
+   *  User                                                                    *
+   *                                                                          *
+   ***************************************************************************/
 
   'get /user': 'UserController.profile',
   'get /user/:id': 'UserController.profile',
   'get /user/:username/events': 'UserController.events',
 
   /***************************************************************************
-  *                                                                          *
-  *  Event                                                                   *
-  *                                                                          *
-  ***************************************************************************/
+   *                                                                          *
+   *  Event                                                                   *
+   *                                                                          *
+   ***************************************************************************/
 
   'get /event/create': 'EventController.create',
   'post /event/create': 'EventController.create',
-  'get /event/:id' : 'EventController.view',
+  'get /event/:id': 'EventController.view',
   'get /event/:id/update': 'EventController.update',
   'post /event/:id/update': 'EventController.update',
   'get /event/:id/delete': 'EventController.delete',
   'post /event/:id/delete': 'EventController.delete',
-  'get /event/:id/team' : 'EventController.team',
-  'get /event/:id/team/adduser' : 'EventController.teamAddUser',
-  'post /event/:id/team/adduser' : 'EventController.teamAddUser',
-  'get /events' : 'EventController.index',
+  'get /event/:id/team': 'EventController.team',
+  'get /event/:id/team/adduser': 'EventController.teamAddUser',
+  'post /event/:id/team/adduser': 'EventController.teamAddUser',
+  'get /events': 'EventController.index',
 
+  /**************************************************************************
+   *                                                                         *
+   *  Track                                                                  *
+   *                                                                         *
+   **************************************************************************/
 
-   /**************************************************************************
+  'get /event/:eventid/track/create': 'TrackController.create',
+  'post /event/:eventid/track/create': 'TrackController.create',
+  'get /event/:eventid/track/:id': 'TrackController.view',
+  'get /event/:eventid/track/:id/update': 'TrackController.update',
+  'post /event/:eventid/track/:id/update': 'TrackController.update',
+  'get /event/:eventid/track/:id/delete': 'TrackController.delete',
+  'post /event/:eventid/track/:id/delete': 'TrackController.delete',
+
+  /**************************************************************************
    *                                                                         *
    *  Talk                                                                   *
    *                                                                         *
@@ -99,5 +112,5 @@ module.exports.routes = {
 
   'get /talk': 'TalkController.index',
   'get /talk/create': 'TalkController.create',
-  'get /talk/:id' : 'TalkController.view'
+  'get /talk/:id': 'TalkController.view'
 };

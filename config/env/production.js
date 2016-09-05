@@ -29,7 +29,7 @@ module.exports = {
     auto_reconnect: false,
     ssl: false,
     stringify: true
-  }
+  },
   /***************************************************************************
    * Set the port in the production environment to 80                        *
    ***************************************************************************/
@@ -43,5 +43,7 @@ module.exports = {
   // log: {
   //   level: "silent"
   // }
+
+  csrf: true
 
 };

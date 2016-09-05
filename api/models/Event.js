@@ -43,9 +43,29 @@ module.exports = {
       collection: 'user',
       via: 'events'
     },
-    isOwnedByCurrentUser(req) {
+    tracks: {
+      collection: 'track',
+      via: 'event',
+      required: false
+    },
+    isOwnedByCurrentUser: function(req) {
       if (!req.user) return false;
       return this.owner.id == req.user.id;
+    },
+    getTracks: function () {
+      var _thisEvent = this;
+      return new Promise(function (resolve, reject) {
+        Track.find({event: _thisEvent.id}).exec(function (error, tracks) {
+          if (error) {
+            reject(error)
+          } else {
+            if (!tracks) {
+              reject('No tracks in this event')
+            }
+            resolve(tracks);
+          }
+        })
+      })
     }
   },
 
