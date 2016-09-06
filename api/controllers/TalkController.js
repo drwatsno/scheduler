@@ -7,41 +7,111 @@
 
 module.exports = {
   /**
-   * list all User talks
+   * Single talk
    * @param req
    * @param res
-   */
-  index: function (req, res) {
-    return res.json({
-      message: 'Talk.index not implemented'
-    });
-  },
-
-  /**
-   * show one talk
-   * @param req
-   * @param res
-   * @returns {*}
    */
   view: function (req, res) {
-    var talkId = req.param('id');
+    var talkId = req.param("id") || null;
 
-    return res.json({
-      message: `(show talk with id ${talkId}) Talk.view not implemented`
-    });
+    Talk.getTalkById(talkId).then(function (talk) {
+      return res.ok(talk, 'talk/view');
+    }, function (error) {
+      return res.serverError(error);
+    })
   },
 
   /**
-   * show create talk form
-   * redirect to login if not authenticated
+   * creates talk
    * @param req
    * @param res
    */
   create: function (req, res) {
-    if (req.isAuthenticated()) {
-      res.view('talk/create');
+    if (req.body) {
+      Talk.create({
+        name: req.body.name,
+        startDate: req.body.start_date,
+        endDate: req.body.end_date,
+        event: req.param("eventid"),
+        owner: req.user.id
+      }).exec(function (error, talk) {
+        if (error) {
+          return res.serverError(error);
+        } else {
+          return res.created(talk, {modelName: 'talk'});
+        }
+      })
     } else {
-      res.redirect('/login');
+      return res.view('talk/form', {data: {title: 'Create talk'}})
+    }
+  },
+
+  update: function (req, res) {
+    if (req.body) {
+      Talk.update({id: req.param("id")}, {
+        name: req.body.name,
+        startDate: req.body.start_date,
+        endDate: req.body.end_date,
+        owner: req.user.id
+      }).exec(function (error, talk) {
+        if (error) {
+          return res.serverError(error);
+        } else {
+          res.redirect('/talk/' + talk[0].id);
+        }
+      })
+    } else {
+      Talk.getTalkById(req.param("id")).then(function (talk) {
+        return res.view('talk/form', {
+          data: {
+            title: 'Update talk',
+            fields: talk
+          }
+        })
+      }, function (error) {
+        res.serverError(error)
+      });
+    }
+  },
+
+  delete: function (req, res) {
+    if (req.body || req.param("continue")) {
+      Talk.destroy({id: req.param("id")}).exec(function (error) {
+        if (error) {
+          res.serverError(error)
+        } else {
+          res.ok({
+            message: {
+              type: 'success',
+              name: `Successfully deleted talk`,
+              content: `Talk was successfully deleted`,
+              links: [
+                {
+                  url: `/`,
+                  name: `Return to main`
+                },
+                {
+                  url: `/user`,
+                  name: `My profile`
+                }
+              ]
+            }
+          }, {view: 'message'})
+        }
+      })
+    } else {
+      Talk.getTalkById(req.param("id")).then(function (talk) {
+        return res.view('warning', {
+          message: {
+            type: 'warning',
+            name: `Deleting talk -"${talk.name}"`,
+            content: `You going to delete talk -"${talk.name}"`
+          }
+        })
+      }, function (error) {
+        res.serverError(error)
+      });
+
     }
   }
 };

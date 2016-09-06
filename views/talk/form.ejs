@@ -1,0 +1,29 @@
+<div class="sch-b-content--default">
+  <h1><%= data.title %></h1>
+  <form class="sch-b_form" method="post">
+    <input type='hidden' name='_csrf' value='<%= _csrf %>'>
+    <div class="form-field">
+      <label for="name">Track name</label>
+      <input type="text" id="name" name="name" class="sch-e_input-text" value="<%= FormsService.getValueOf(data.fields,'name') %>">
+    </div>
+
+    <div class="form-field">
+      <label for="description">Track description</label>
+      <input type="text" id="description" name="description" class="sch-e_input-text" value="<%= FormsService.getValueOf(data.fields,'description') %>">
+    </div>
+
+    <div class="form-field">
+      <label for="start_date">Start Date</label>
+      <input type="text" id="start_date" name="start_date" class="sch-e_input-text sch-e_date-input" value="<%= FormsService.getValueOf(data.fields,'startDate') %>">
+    </div>
+
+    <div class="form-field">
+      <label for="end_date">End Date</label>
+      <input type="text" id="end_date" name="end_date" class="sch-e_input-text sch-e_date-input" value="<%= FormsService.getValueOf(data.fields,'endDate') %>">
+    </div>
+
+    <div class="form-actions">
+      <input type="submit" class="sch-e_green-button" value="<%= data.title %>">
+    </div>
+  </form>
+</div>

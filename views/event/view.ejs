@@ -57,6 +57,21 @@
           </div>
         </div>
         <!-- -->
+        <!-- -->
+        <div class="table-item">
+          <div class="item-name">
+            Event tracks
+          </div>
+          <div class="item-value">
+            <% for (track of event.tracks) { %>
+            <a class="sch-e_taglink" href="<%= req.path %>/track/<%= track.id%>"><%= track.name %></a>
+            <%}%>
+            <% if (event.isOwnedByCurrentUser(req)) { %>
+            <a class="sch-e_taglink mod-green" href="<%=req.path%>/track/create">+</a>
+            <%}%>
+          </div>
+        </div>
+        <!-- -->
       </div>
       <% if (event.isOwnedByCurrentUser(req)) { %>
       <%- partial('../partials/links.ejs',{
@@ -64,6 +79,10 @@
           {
             name:'Change event',
             url:`${req.path}/update`
+          },
+          {
+            name:'Add Track',
+            url:`${req.path}/track/create`
           },
           {
             name: 'Delete event',

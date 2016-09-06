@@ -1,0 +1,80 @@
+<% var talk = data %>
+<div class="sch-b-content--default">
+  <h1><%= talk.name %></h1>
+      <div class="sch-b_name-value-table">
+          <!-- -->
+          <div class="table-item">
+            <div class="item-name">
+              Talk event
+            </div>
+            <div class="item-value">
+              <%= talk.event.name %>
+            </div>
+          </div>
+          <!-- -->
+          <!-- -->
+          <div class="table-item">
+            <div class="item-name">
+              Talk track
+            </div>
+            <div class="item-value">
+              <%= talk.track.name %>
+            </div>
+          </div>
+          <!-- -->
+          <!-- -->
+          <div class="table-item">
+            <div class="item-name">
+              Talk name
+            </div>
+            <div class="item-value">
+              <%= talk.name %>
+            </div>
+          </div>
+        <!-- -->
+        <!-- -->
+        <div class="table-item">
+          <div class="item-name">
+            Talk description
+          </div>
+          <div class="item-value">
+            <%= talk.description %>
+          </div>
+        </div>
+        <!-- -->
+        <!-- -->
+        <div class="table-item">
+          <div class="item-name">
+            Talk start date
+          </div>
+          <div class="item-value">
+            <%= talk.startDate %>
+          </div>
+        </div>
+        <!-- -->
+        <!-- -->
+        <div class="table-item">
+          <div class="item-name">
+            Talk end date
+          </div>
+          <div class="item-value">
+            <%= talk.endDate %>
+          </div>
+        </div>
+        <!-- -->
+      </div>
+      <% if (talk.isOwnedByCurrentUser(req)) { %>
+      <%- partial('../partials/links.ejs',{
+        links : [
+          {
+            name:'Change talk',
+            url:`${req.path}/update`
+          },
+          {
+            name: 'Delete talk',
+            url:`${req.path}/delete`
+          }
+       ]
+      })%>
+    <%}%>
+</div>

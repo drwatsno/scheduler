@@ -64,5 +64,23 @@ module.exports.policies = {
     create: 'isAuthenticated',
     update: ['isAuthenticated','isEventOwner'],
     teamAddUser: ['isAuthenticated','isEventOwner']
+  },
+
+  'TrackController': {
+    index: true,
+    view: true,
+    delete: ['isAuthenticated','isTrackOwner'],
+    create: 'isAuthenticated',
+    update: ['isAuthenticated','isTrackOwner'],
+    teamAddUser: ['isAuthenticated','isTrackOwner']
+  },
+
+  'TalkController': {
+    index: true,
+    view: true,
+    delete: ['isAuthenticated','isTalkOwner'],
+    create: 'isAuthenticated',
+    update: ['isAuthenticated','isTalkOwner'],
+    teamAddUser: ['isAuthenticated','isTalkOwner']
   }
 };

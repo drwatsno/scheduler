@@ -1,2 +1,9 @@
-<!-- keep -->
-Show all user talks
+<div class="sch-b-content--default">
+  <h1>Tracks</h1>
+  <% for (talk of data) {%>
+    Track name: <a href="/event/<%= talk.id%>"><%= talk.name %></a><br>
+    Start date: <%= talk.startDate %><br>
+    End date: <%= talk.endDate%>
+    <br><br>
+  <%}%>
+ </div>

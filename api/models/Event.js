@@ -99,8 +99,7 @@ module.exports = {
   getEventById: function (eventId) {
     return new Promise(function (resolve, reject) {
       Event.find({id: eventId})
-        .populate('team')
-        .populate('owner')
+        .populateAll()
         .exec(function (error, events) {
           if (error) {
             reject(error)

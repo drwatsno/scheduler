@@ -6,7 +6,6 @@
  */
 
 module.exports = {
-
   /**
    * Single track
    * @param req

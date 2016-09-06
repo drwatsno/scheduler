@@ -110,7 +110,11 @@ module.exports.routes = {
    *                                                                         *
    **************************************************************************/
 
-  'get /talk': 'TalkController.index',
-  'get /talk/create': 'TalkController.create',
-  'get /talk/:id': 'TalkController.view'
+  'get /event/:eventid/track/:trackid/talk/create': 'TalkController.create',
+  'post /event/:eventid/track/:trackid/talk/create': 'TalkController.create',
+  'get /event/:eventid/track/:trackid/talk/:id': 'TalkController.view',
+  'get /event/:eventid/track/:trackid/talk/:id/update': 'TalkController.update',
+  'post /event/:eventid/track/:trackid/talk/:id/update': 'TalkController.update',
+  'get /event/:eventid/track/:trackid/talk/:id/delete': 'TalkController.delete',
+  'post /event/:eventid/track/:trackid/talk/:id/delete': 'TalkController.delete'
 };

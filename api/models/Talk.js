@@ -44,7 +44,35 @@ module.exports = {
     },
     track: {
       model: 'track'
+    },
+    owner: {
+      model: 'user'
+    },
+    isOwnedByCurrentUser: function(req) {
+      if (!req.user) return false;
+      return this.owner.id == req.user.id;
     }
+  },
+  /**
+   * returns talk by its id
+   * @param talkId
+   * @returns {Promise}
+   */
+  getTalkById: function (talkId) {
+    return new Promise(function (resolve, reject) {
+      Talk.find({id: talkId})
+        .populate('owner')
+        .exec(function (error, talks) {
+          if (error) {
+            reject(error)
+          } else {
+            if (!talks||talks.length<1) {
+              reject(new Error('No such talk'))
+            }
+            resolve(talks[0])
+          }
+        });
+    });
   }
 };
 
