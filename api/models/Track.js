@@ -55,7 +55,7 @@ module.exports = {
   getTrackById: function (trackId) {
     return new Promise(function (resolve, reject) {
       Track.find({id: trackId})
-        .populate('owner')
+        .populateAll()
         .exec(function (error, tracks) {
           if (error) {
             reject(error)

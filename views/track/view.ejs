@@ -39,10 +39,10 @@
           </div>
           <div class="item-value">
             <% for (talk of track.talks) { %>
-              <a class="sch-e_taglink" href="/user/<%= talk.id%>"><%= talk.name %></a>
+              <a class="sch-e_taglink" href="<%=req.path%>/talk/<%= talk.id%>"><%= talk.name %></a>
             <%}%>
             <% if (track.isOwnedByCurrentUser(req)) { %>
-              <a class="sch-e_taglink mod-green" href="<%=req.path%>/talk/add">+</a>
+              <a class="sch-e_taglink mod-green" href="<%=req.path%>/talk/create">+</a>
             <%}%>
           </div>
         </div>

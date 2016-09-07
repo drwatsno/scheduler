@@ -28,16 +28,34 @@ module.exports = {
    */
   create: function (req, res) {
     if (req.body) {
+      var startDate = new Date(req.body.start_date),
+          endDate = new Date(req.body.end_date);
+
+      startDate.setHours(Number(/(\d*)\:(\d*)/g.exec(req.body.start_time)[1])||0);
+      startDate.setMinutes(Number(/(\d*)\:(\d*)/g.exec(req.body.start_time)[2])||0);
+
+      endDate.setHours(Number(/(\d*)\:(\d*)/g.exec(req.body.start_time)[1])||0);
+      endDate.setMinutes(Number(/(\d*)\:(\d*)/g.exec(req.body.start_time)[2])||0);
+
       Talk.create({
         name: req.body.name,
-        startDate: req.body.start_date,
-        endDate: req.body.end_date,
-        event: req.param("eventid"),
+        startDate: startDate,
+        endDate: endDate,
+        track: req.param("trackid"),
+        speakers: [req.body.speaker],
         owner: req.user.id
       }).exec(function (error, talk) {
         if (error) {
           return res.serverError(error);
         } else {
+         /* talk.speakers.add(req.body.speaker);
+          talk.save(function (error) {
+            if (error) {
+              res.serverError(error);
+            } else {
+              return res.created(talk, {modelName: 'talk'});
+            }
+          });*/
           return res.created(talk, {modelName: 'talk'});
         }
       })
@@ -48,16 +66,25 @@ module.exports = {
 
   update: function (req, res) {
     if (req.body) {
+      var startDate = new Date(req.body.start_date),
+        endDate = new Date(req.body.end_date);
+
+      startDate.setHours(Number(/(\d*)\:(\d*)/g.exec(req.body.start_time)[1])||0);
+      startDate.setMinutes(Number(/(\d*)\:(\d*)/g.exec(req.body.start_time)[2])||0);
+
+      endDate.setHours(Number(/(\d*)\:(\d*)/g.exec(req.body.start_time)[1])||0);
+      endDate.setMinutes(Number(/(\d*)\:(\d*)/g.exec(req.body.start_time)[2])||0);
+
       Talk.update({id: req.param("id")}, {
         name: req.body.name,
-        startDate: req.body.start_date,
-        endDate: req.body.end_date,
+        startDate: startDate,
+        endDate: endDate,
         owner: req.user.id
       }).exec(function (error, talk) {
         if (error) {
           return res.serverError(error);
         } else {
-          res.redirect('/talk/' + talk[0].id);
+          res.redirect(req.path+'../'+talk.id);
         }
       })
     } else {

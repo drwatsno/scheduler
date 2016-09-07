@@ -4,6 +4,7 @@
  * @description :: TODO: You might write a short summary of how this model works and what it represents here.
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
  */
+var uuid = require('uuid');
 
 module.exports = {
 
@@ -61,15 +62,19 @@ module.exports = {
   getTalkById: function (talkId) {
     return new Promise(function (resolve, reject) {
       Talk.find({id: talkId})
-        .populate('owner')
+        .populateAll()
         .exec(function (error, talks) {
           if (error) {
             reject(error)
           } else {
             if (!talks||talks.length<1) {
               reject(new Error('No such talk'))
+            } else {
+              Event.findOne({id: talks[0].track.event}).exec(function (error, event) {
+                talks[0].event = Object.create(event);
+                resolve(talks[0]);
+              });
             }
-            resolve(talks[0])
           }
         });
     });
