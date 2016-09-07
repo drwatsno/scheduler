@@ -24,7 +24,7 @@ module.exports = {
 
   session: {
     adapter: 'connect-mongo',
-    url: 'mongodb://localhost:27017/easyseo',
+    url: 'mongodb://localhost:27017/scheduler',
     collection: 'sessions',
     auto_reconnect: false,
     ssl: false,
