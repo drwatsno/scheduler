@@ -4,109 +4,109 @@
  * @description :: TODO: You might write a short summary of how this model works and what it represents here.
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
  */
-
-var bcrypt = require("bcrypt");
-var uuid = require('uuid');
+"use strict";
+let bCrypt = require("bcrypt");
+let uuid = require("uuid");
 
 
 module.exports = {
 
   attributes: {
-    id : {
-      type: 'text',
+    id: {
+      type: "text",
       primaryKey: true,
       unique: true,
       required: true,
       uuidv4: true,
-      defaultsTo: function () {
-        return uuid.v4();
-      }
+      defaultsTo: () => uuid.v4()
     },
     name: {
-      type: 'string',
+      type: "string",
       unique: true,
       defaultsTo: function () {
         return this.email.match(/.*(?=\@)/g)[0];
       }
     },
     password: {
-      type: 'string',
+      type: "string",
       minLength: 6,
       required: true
     },
     role: {
-      type: 'role',
+      type: "role",
       unique: false
     },
     email: {
-      type: 'email',
+      type: "email",
       required: true,
       unique: true,
       email: true
     },
     events: {
-      collection: 'event',
-      via: 'team',
+      collection: "event",
+      via: "team",
       dominant: true
     },
     talks: {
-      collection: 'talk',
-      via: 'speakers',
+      collection: "talk",
+      via: "speakers",
       dominant: true
     },
-    toJSON: function() {
-      var obj = this.toObject();
+    toJSON() {
+      let obj = this.toObject();
       delete obj.password;
       return obj;
     }
   },
 
-  getUserById: function (userId) {
+  getUserById(userId) {
     return new Promise(function (resolve, reject) {
       User.findOne({id: userId}).exec(function (error, user) {
         if (error) {
-          reject(error)
+          reject(error);
         } else {
-          resolve(user)
+          resolve(user);
         }
-      })
-    })
+      });
+    });
   },
 
-  getEventsByUserId: function (userId) {
+  getEventsByUserId(userId) {
     return new Promise(function (resolve, reject) {
       User.find({id: userId})
-        .populate('events')
-        .exec(function(error, user) {
+        .populate("events")
+        .exec(function (error, user) {
           if (error) {
-            reject(error)
+            reject(error);
           } else {
-            resolve(user[0].events)
+            resolve(user[0].events);
           }
         });
-    })
+    });
   },
 
-  getEventsByUserName: function (userName) {
+  getEventsByUserName(userName) {
     return new Promise(function (resolve, reject) {
       User.find({name: userName})
-        .populate('events')
-        .exec(function(error, user) {
+        .populate("events")
+        .exec(function (error, user) {
           if (error) {
-            reject(error)
+            reject(error);
           } else {
-            resolve(user[0].events)
+            resolve(user[0].events);
           }
         });
-    })
+    });
   },
 
-  beforeCreate: function(values, callback) {
-    bcrypt.genSalt(10, function(err, salt) {
-      bcrypt.hash(values.password, salt, function(err, hash) {
-        if (err) {
-          sails.log(err);
-          callback(err);
+  beforeCreate(values, callback) {
+    bCrypt.genSalt(10, function (saltError, salt) {
+      if (saltError) {
+        callback(saltError);
+      }
+      bCrypt.hash(values.password, salt, function (hashError, hash) {
+        if (hashError) {
+          callback(hashError);
         } else {
           values.password = hash;
           callback();

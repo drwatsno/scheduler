@@ -1,0 +1,31 @@
+{
+  "env" : {
+    "es6": true,
+    "node": true
+  },
+  "globals": {
+    "sails": true,
+    "UserController": true,
+    "AuthController": true,
+    "PhraseController": true,
+    "RoleController": true,
+    "SiteController": true,
+    "TalkController": true,
+    "TrackController": true,
+    "Event" : true,
+    "Role": true,
+    "Talk": true,
+    "Track": true,
+    "User": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "rules": {
+    "semi": 2
+  }
+}

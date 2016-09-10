@@ -4,8 +4,9 @@
  * @description :: Server-side logic for managing authorisation
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
+"use strict";
 
-var passport = require('passport');
+let passport = require("passport");
 
 module.exports = {
 
@@ -18,25 +19,27 @@ module.exports = {
    * login user
    * @param req
    * @param res
-     */
-  login: function(req, res) {
+   */
+  login(req, res) {
 
-    passport.authenticate('local', function(err, user, info) {
+    passport.authenticate("local", function (err, user, info) {
       if ((err) || (!user)) {
-        return res.view('message',{
+        return res.view("message", {
           message: {
-            type: 'error',
-            name: 'Login error',
+            type: "error",
+            name: "Login error",
             content: info.message
           }
         });
       }
-      req.logIn(user, function(error) {
-        if (err) res.serverError(error);
-        return res.view('message', {
+      req.logIn(user, function (loginError) {
+        if (loginError) {
+          return res.serverError(loginError);
+        }
+        return res.view("message", {
           message: {
-            type: 'success',
-            name: 'Logged in successfully',
+            type: "success",
+            name: "Logged in successfully",
             content: `Successfully logged in as ${user.name}`,
             links: [
               {
@@ -59,48 +62,46 @@ module.exports = {
    * logout
    * @param req
    * @param res
-     */
-  logout: function(req, res) {
+   */
+  logout(req, res) {
     req.logout();
-    res.redirect('/');
+    res.redirect("/");
   },
 
   /**
    * sign up
    * @param req
    * @param res
-     */
-  signUp: function (req, res) {
-     User.create(req.body).exec(function (error, user) {
+   */
+  signUp(req, res) {
+    User.create(req.body).exec(function (error, user) {
 
-       if (error) {
-         return res.serverError(error);
-       }
+      if (error) {
+        return res.serverError(error);
+      }
 
-       req.logIn(user, function(error) {
-         if (error) {
-           return res.serverError(error);
-         }
-         res.view('message',{
-           message: {
-             type: 'success',
-             name: "Successfully signed up",
-             content:
-               `Registered user with name ${user.name} and email ${user.email}`,
-             links: [
-               {
-                 url: `/`,
-                 name: `Return to main`
-               },
-               {
-                 url: `/user`,
-                 name: `My profile`
-               }
-             ]
-           }
-         });
-       });
-
-     });
+      req.logIn(user, function (loginError) {
+        if (loginError) {
+          return res.serverError(loginError);
+        }
+        return res.view("message", {
+          message: {
+            type: "success",
+            name: "Successfully signed up",
+            content: `Registered user with name ${user.name} and email ${user.email}`,
+            links: [
+              {
+                url: `/`,
+                name: `Return to main`
+              },
+              {
+                url: `/user`,
+                name: `My profile`
+              }
+            ]
+          }
+        });
+      });
+    });
   }
 };

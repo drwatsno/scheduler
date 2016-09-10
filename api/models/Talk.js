@@ -4,54 +4,52 @@
  * @description :: TODO: You might write a short summary of how this model works and what it represents here.
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
  */
-var uuid = require('uuid');
+"use strict";
+let uuid = require("uuid");
 
 module.exports = {
 
   attributes: {
-    id : {
-      type: 'text',
+    id: {
+      type: "text",
       primaryKey: true,
       unique: true,
       required: true,
       uuidv4: true,
-      defaultsTo: function () {
-        return uuid.v4();
-      }
+      defaultsTo: () => uuid.v4()
     },
     name: {
-      type: 'string',
+      type: "string",
       unique: false,
       required: true
     },
     description: {
-      type: 'text',
+      type: "text",
       unique: false
     },
     startDate: {
-      type: 'datetime',
+      type: "datetime",
       unique: false,
       required: true
     },
     endDate: {
-      type: 'datetime',
+      type: "datetime",
       unique: false,
       required: true
     },
     speakers: {
-      collection: 'user',
-      via: 'talks',
+      collection: "user",
+      via: "talks",
       required: true
     },
     track: {
-      model: 'track'
+      model: "track"
     },
     owner: {
-      model: 'user'
+      model: "user"
     },
-    isOwnedByCurrentUser: function(req) {
-      if (!req.user) return false;
-      return this.owner.id == req.user.id;
+    isOwnedByCurrentUser(req) {
+      return !req.user ? false : this.owner.id === req.user.id;
     }
   },
   /**
@@ -59,20 +57,24 @@ module.exports = {
    * @param talkId
    * @returns {Promise}
    */
-  getTalkById: function (talkId) {
+  getTalkById(talkId) {
     return new Promise(function (resolve, reject) {
       Talk.find({id: talkId})
         .populateAll()
         .exec(function (error, talks) {
           if (error) {
-            reject(error)
+            reject(error);
           } else {
-            if (!talks||talks.length<1) {
-              reject(new Error('No such talk'))
+            if (!talks || talks.length < 1) {
+              reject(new Error("No such talk"));
             } else {
-              Event.findOne({id: talks[0].track.event}).exec(function (error, event) {
-                talks[0].event = Object.create(event);
-                resolve(talks[0]);
+              Event.findOne({id: talks[0].track.event}).exec(function (queryError, event) {
+                if (queryError) {
+                  reject(queryError);
+                } else {
+                  talks[0].event = Object.create(event);
+                  resolve(talks[0]);
+                }
               });
             }
           }

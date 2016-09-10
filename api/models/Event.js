@@ -4,68 +4,65 @@
  * @description :: TODO: You might write a short summary of how this model works and what it represents here.
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
  */
-
-var uuid = require('uuid');
+"use strict";
+let uuid = require("uuid");
 
 module.exports = {
 
   attributes: {
-    id : {
-      type: 'text',
+    id: {
+      type: "text",
       primaryKey: true,
       unique: true,
       required: true,
       uuidv4: true,
-      defaultsTo: function () {
-        return uuid.v4();
-      }
+      defaultsTo: () => uuid.v4()
     },
     name: {
-      type: 'string',
+      type: "string",
       unique: false,
       required: true
     },
     startDate: {
-      type: 'datetime',
+      type: "datetime",
       unique: false,
       required: true
     },
     endDate: {
-      type: 'datetime',
+      type: "datetime",
       unique: false,
       required: true
     },
     owner: {
-      model: 'user',
+      model: "user",
       required: true
     },
     team: {
-      collection: 'user',
-      via: 'events'
+      collection: "user",
+      via: "events"
     },
     tracks: {
-      collection: 'track',
-      via: 'event',
+      collection: "track",
+      via: "event",
       required: false
     },
-    isOwnedByCurrentUser: function(req) {
-      if (!req.user) return false;
-      return this.owner.id == req.user.id;
+    isOwnedByCurrentUser(req) {
+      return !req.user ? false : this.owner.id === req.user.id;
     },
-    getTracks: function () {
-      var _thisEvent = this;
+    getTracks() {
+      let thisEvent = this;
       return new Promise(function (resolve, reject) {
-        Track.find({event: _thisEvent.id}).exec(function (error, tracks) {
+        Track.find({event: thisEvent.id}).exec(function (error, tracks) {
           if (error) {
-            reject(error)
+            reject(error);
           } else {
             if (!tracks) {
-              reject('No tracks in this event')
+              reject("No tracks in this event");
             }
             resolve(tracks);
           }
-        })
-      })
+        });
+      });
     }
   },
 
@@ -73,19 +70,19 @@ module.exports = {
    * returns all events
    * @returns {Promise}
      */
-  getAllEvents: function () {
+  getAllEvents() {
     return new Promise(function (resolve, reject) {
       Event.find()
-        .populate('team')
-        .populate('owner')
+        .populate("team")
+        .populate("owner")
         .exec(function (error, events) {
           if (error) {
-            reject(error)
+            reject(error);
           } else {
-            if (!events||events.length<1) {
-              reject(new Error('No events'))
+            if (!events || events.length < 1) {
+              reject(new Error("No events"));
             }
-            resolve(events)
+            resolve(events);
           }
         });
     });
@@ -96,18 +93,18 @@ module.exports = {
    * @param eventId
    * @returns {Promise}
      */
-  getEventById: function (eventId) {
+  getEventById(eventId) {
     return new Promise(function (resolve, reject) {
       Event.find({id: eventId})
         .populateAll()
         .exec(function (error, events) {
           if (error) {
-            reject(error)
+            reject(error);
           } else {
-            if (!events||events.length<1) {
-              reject(new Error('No such event'))
+            if (!events || events.length < 1) {
+              reject(new Error("No such event"));
             }
-            resolve(events[0])
+            resolve(events[0]);
           }
         });
     });
@@ -118,22 +115,22 @@ module.exports = {
    * @param eventId
    * @returns {Promise}
      */
-  getEventTeam: function (eventId) {
+  getEventTeam(eventId) {
     return new Promise(function (resolve, reject) {
       Event.find({id: eventId})
-        .populate('team')
+        .populate("team")
         .exec(function (error, events) {
           if (error) {
-            reject(error)
+            reject(error);
           } else {
-            if (typeof events=='undefined'||events.length<1||typeof events[0].team =='undefined') {
-              reject(new Error('No such event'))
+            if (typeof events === "undefined" || events.length < 1 || typeof events[0].team === "undefined") {
+              reject(new Error("No such event"));
             } else {
-              resolve(events[0].team)
+              resolve(events[0].team);
             }
           }
-        })
-    })
+        });
+    });
   },
 
   /**
@@ -142,50 +139,45 @@ module.exports = {
    * @param userId
    * @returns {Promise}
      */
-  addUserToTeam: function (eventId, userId) {
+  addUserToTeam(eventId, userId) {
     return new Promise(function (resolve, reject) {
       Event.findOne({id: eventId})
         .exec(function (error, event) {
           if (error) {
-            reject(error)
+            reject(error);
           } else {
             if (event) {
               event.team.add(userId);
-              event.save(function (error) {
-                if (error) {
-                  reject(error)
+              event.save(function (eventSaveError) {
+                if (eventSaveError) {
+                  reject(eventSaveError);
                 } else {
-                  resolve(event)
+                  resolve(event);
                 }
-              })
+              });
             } else {
-             res.notFound('no such event')
+              reject("no such event");
             }
           }
-        })
-    })
+        });
+    });
   },
 
   /**
    * All events has one team member (owner) after create
-   * @param event
+   * @param eventModel
    * @param callback
      */
-  afterCreate: function (event, callback) {
-    Event.findOne({id: event.id}).exec(function (error, event) {
+  afterCreate(eventModel, callback) {
+    Event.findOne({id: eventModel.id}).exec(function (error, event) {
       if (error) {
         callback(error);
       }
       event.team.add(event.owner);
-      event.save(function (error) {
-        if (error) {
-          callback(error);
-        } else {
-          callback();
-        }
+      event.save(function (eventSaveError) {
+        callback(eventSaveError || void 0);
       });
     });
-
   }
 };
 

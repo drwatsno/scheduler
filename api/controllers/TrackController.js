@@ -4,21 +4,19 @@
  * @description :: Server-side logic for managing tracks
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
-
+"use strict";
 module.exports = {
   /**
    * Single track
    * @param req
    * @param res
    */
-  view: function (req, res) {
-    var trackId = req.param("id") || null;
+  view(req, res) {
+    let trackId = req.param("id") || null;
 
     Track.getTrackById(trackId).then(function (track) {
-      return res.ok(track, 'track/view');
-    }, function (error) {
-      return res.serverError(error);
-    })
+      return res.ok(track, "track/view");
+    }, (error) => res.serverError(error));
   },
 
   /**
@@ -26,7 +24,7 @@ module.exports = {
    * @param req
    * @param res
    */
-  create: function (req, res) {
+  create(req, res) {
     if (req.body) {
       Track.create({
         name: req.body.name,
@@ -38,15 +36,20 @@ module.exports = {
         if (error) {
           return res.serverError(error);
         } else {
-          return res.created(track, {modelName: 'track'});
+          return res.created(track, {modelName: "track"});
         }
-      })
+      });
     } else {
-      return res.view('track/form', {data: {title: 'Create track'}})
+      return res.view("track/form", {data: {title: "Create track"}});
     }
   },
 
-  update: function (req, res) {
+  /**
+   * Update track or show update track form
+   * @param req
+   * @param res
+   */
+  update(req, res) {
     if (req.body) {
       Track.update({id: req.param("id")}, {
         name: req.body.name,
@@ -57,32 +60,35 @@ module.exports = {
         if (error) {
           return res.serverError(error);
         } else {
-          res.redirect('/track/' + track[0].id);
+          return res.redirect(`/track/${track[0].id}`);
         }
-      })
+      });
     } else {
       Track.getTrackById(req.param("id")).then(function (track) {
-        return res.view('track/form', {
+        return res.view("track/form", {
           data: {
-            title: 'Update track',
+            title: "Update track",
             fields: track
           }
-        })
-      }, function (error) {
-        res.serverError(error)
-      });
+        });
+      }, (error) => res.serverError(error));
     }
   },
 
-  delete: function (req, res) {
+  /**
+   * Delete track, show delete form or successful delete message
+   * @param req
+   * @param res
+   */
+  delete(req, res) {
     if (req.body || req.param("continue")) {
       Track.destroy({id: req.param("id")}).exec(function (error) {
         if (error) {
-          res.serverError(error)
+          return res.serverError(error);
         } else {
-          res.ok({
+          return res.ok({
             message: {
-              type: 'success',
+              type: "success",
               name: `Successfully deleted track`,
               content: `Track was successfully deleted`,
               links: [
@@ -96,21 +102,19 @@ module.exports = {
                 }
               ]
             }
-          }, {view: 'message'})
+          }, {view: "message"});
         }
-      })
+      });
     } else {
       Track.getTrackById(req.param("id")).then(function (track) {
-        return res.view('warning', {
+        return res.view("warning", {
           message: {
-            type: 'warning',
+            type: "warning",
             name: `Deleting track -"${track.name}"`,
             content: `You going to delete track -"${track.name}"`
           }
-        })
-      }, function (error) {
-        res.serverError(error)
-      });
+        });
+      }, (error) => res.serverError(error));
 
     }
   }

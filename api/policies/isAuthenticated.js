@@ -1,8 +1,4 @@
-module.exports = function(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  else {
-    return res.redirect('/login');
-  }
+"use strict";
+module.exports = function (req, res, next) {
+  return req.isAuthenticated() ? next() : res.redirect("/login");
 };

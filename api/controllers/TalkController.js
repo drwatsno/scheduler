@@ -5,20 +5,22 @@
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
+"use strict";
+const TIME_FIELD_PATTERN = /(\d+):(\d+)/;
 module.exports = {
   /**
    * Single talk
    * @param req
    * @param res
    */
-  view: function (req, res) {
-    var talkId = req.param("id") || null;
+  view(req, res) {
+    let talkId = req.param("id") || null;
 
     Talk.getTalkById(talkId).then(function (talk) {
-      return res.ok(talk, 'talk/view');
+      return res.ok(talk, "talk/view");
     }, function (error) {
       return res.serverError(error);
-    })
+    });
   },
 
   /**
@@ -26,16 +28,16 @@ module.exports = {
    * @param req
    * @param res
    */
-  create: function (req, res) {
+  create(req, res) {
     if (req.body) {
-      var startDate = new Date(req.body.start_date),
-          endDate = new Date(req.body.end_date);
+      let startDate = new Date(req.body.start_date),
+        endDate = new Date(req.body.end_date);
 
-      startDate.setHours(Number(/(\d*)\:(\d*)/g.exec(req.body.start_time)[1])||0);
-      startDate.setMinutes(Number(/(\d*)\:(\d*)/g.exec(req.body.start_time)[2])||0);
+      startDate.setHours(Number(TIME_FIELD_PATTERN.exec(req.body.start_time)[1]) || 0);
+      startDate.setMinutes(Number(TIME_FIELD_PATTERN.exec(req.body.start_time)[2]) || 0);
 
-      endDate.setHours(Number(/(\d*)\:(\d*)/g.exec(req.body.start_time)[1])||0);
-      endDate.setMinutes(Number(/(\d*)\:(\d*)/g.exec(req.body.start_time)[2])||0);
+      endDate.setHours(Number(TIME_FIELD_PATTERN.exec(req.body.start_time)[1]) || 0);
+      endDate.setMinutes(Number(TIME_FIELD_PATTERN.exec(req.body.start_time)[2]) || 0);
 
       Talk.create({
         name: req.body.name,
@@ -48,32 +50,29 @@ module.exports = {
         if (error) {
           return res.serverError(error);
         } else {
-         /* talk.speakers.add(req.body.speaker);
-          talk.save(function (error) {
-            if (error) {
-              res.serverError(error);
-            } else {
-              return res.created(talk, {modelName: 'talk'});
-            }
-          });*/
-          return res.created(talk, {modelName: 'talk'});
+          return res.created(talk, {modelName: "talk"});
         }
-      })
+      });
     } else {
-      return res.view('talk/form', {data: {title: 'Create talk'}})
+      return res.view("talk/form", {data: {title: "Create talk"}});
     }
   },
 
-  update: function (req, res) {
+  /**
+   * Update talk or show update form
+   * @param req
+   * @param res
+   */
+  update(req, res) {
     if (req.body) {
-      var startDate = new Date(req.body.start_date),
+      let startDate = new Date(req.body.start_date),
         endDate = new Date(req.body.end_date);
 
-      startDate.setHours(Number(/(\d*)\:(\d*)/g.exec(req.body.start_time)[1])||0);
-      startDate.setMinutes(Number(/(\d*)\:(\d*)/g.exec(req.body.start_time)[2])||0);
+      startDate.setHours(Number(TIME_FIELD_PATTERN.exec(req.body.start_time)[1]) || 0);
+      startDate.setMinutes(Number(TIME_FIELD_PATTERN.exec(req.body.start_time)[2]) || 0);
 
-      endDate.setHours(Number(/(\d*)\:(\d*)/g.exec(req.body.start_time)[1])||0);
-      endDate.setMinutes(Number(/(\d*)\:(\d*)/g.exec(req.body.start_time)[2])||0);
+      endDate.setHours(Number(TIME_FIELD_PATTERN.exec(req.body.start_time)[1]) || 0);
+      endDate.setMinutes(Number(TIME_FIELD_PATTERN.exec(req.body.start_time)[2]) || 0);
 
       Talk.update({id: req.param("id")}, {
         name: req.body.name,
@@ -84,32 +83,35 @@ module.exports = {
         if (error) {
           return res.serverError(error);
         } else {
-          res.redirect(req.path+'../'+talk.id);
+          return res.redirect(`${req.path}../${talk.id}`);
         }
-      })
+      });
     } else {
       Talk.getTalkById(req.param("id")).then(function (talk) {
-        return res.view('talk/form', {
+        return res.view("talk/form", {
           data: {
-            title: 'Update talk',
+            title: "Update talk",
             fields: talk
           }
-        })
-      }, function (error) {
-        res.serverError(error)
-      });
+        });
+      }, (error) => res.serverError(error));
     }
   },
 
-  delete: function (req, res) {
+  /**
+   * Delete talk, show delete form or successful delete message
+   * @param req
+   * @param res
+   */
+  delete(req, res) {
     if (req.body || req.param("continue")) {
       Talk.destroy({id: req.param("id")}).exec(function (error) {
         if (error) {
-          res.serverError(error)
+          return res.serverError(error);
         } else {
-          res.ok({
+          return res.ok({
             message: {
-              type: 'success',
+              type: "success",
               name: `Successfully deleted talk`,
               content: `Talk was successfully deleted`,
               links: [
@@ -123,22 +125,19 @@ module.exports = {
                 }
               ]
             }
-          }, {view: 'message'})
+          }, {view: "message"});
         }
-      })
+      });
     } else {
       Talk.getTalkById(req.param("id")).then(function (talk) {
-        return res.view('warning', {
+        return res.view("warning", {
           message: {
-            type: 'warning',
+            type: "warning",
             name: `Deleting talk -"${talk.name}"`,
             content: `You going to delete talk -"${talk.name}"`
           }
-        })
-      }, function (error) {
-        res.serverError(error)
-      });
-
+        });
+      }, (error) => res.serverError(error));
     }
   }
 };

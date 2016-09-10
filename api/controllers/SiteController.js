@@ -1,7 +1,8 @@
+"use strict";
 module.exports = {
-  index: function (request, response) {
-    return res.view('',{
+  index(req, res) {
+    return res.view("", {
       // locals
-    })
+    });
   }
 };
