@@ -84,8 +84,8 @@ module.exports.routes = {
   "get /event/:id/delete": "EventController.delete",
   "post /event/:id/delete": "EventController.delete",
   "get /event/:id/team": "EventController.team",
-  "get /event/:id/team/adduser": "EventController.teamAddUser",
-  "post /event/:id/team/adduser": "EventController.teamAddUser",
+  "get /event/:id/team/add": "EventController.teamAddUser",
+  "post /event/:id/team/add": "EventController.teamAddUser",
   "get /events": "EventController.index",
 
   /**************************************************************************
@@ -114,5 +114,8 @@ module.exports.routes = {
   "get /event/:eventid/track/:trackid/talk/:id/update": "TalkController.update",
   "post /event/:eventid/track/:trackid/talk/:id/update": "TalkController.update",
   "get /event/:eventid/track/:trackid/talk/:id/delete": "TalkController.delete",
-  "post /event/:eventid/track/:trackid/talk/:id/delete": "TalkController.delete"
+  "post /event/:eventid/track/:trackid/talk/:id/delete": "TalkController.delete",
+  "get /event/:eventid/track/:trackid/talk/:id/speakers": "TalkController.speakers",
+  "get /event/:eventid/track/:trackid/talk/:id/speakers/add": "TalkController.speakersAddUser",
+  "post /event/:eventid/track/:trackid/talk/:id/speakers/add": "TalkController.speakersAddUser"
 };

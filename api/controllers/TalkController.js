@@ -139,6 +139,39 @@ module.exports = {
         });
       }, (error) => res.serverError(error));
     }
+  },
+
+  /**
+   * Manages requests to speakers of talk
+   * @param req
+   * @param res
+   */
+  speakers(req, res) {
+    let talkId = req.param("id");
+
+    Talk.getSpeakers(talkId).then(function (speakers) {
+      return res.ok(speakers, "talk/speakers/index");
+    }, function (error) {
+      return res.serverError(error);
+    });
+  },
+
+  /**
+   * Adds user to talk speakers
+   * @param req
+   * @param res
+   */
+  speakersAddUser(req, res) {
+    let talkId = req.param("id");
+    if (req.body) {
+      Talk.addSpeaker(talkId, req.body.userid).then(function (speaker) {
+        return res.created(speaker, {modelName: "talk speaker"});
+      }, function (error) {
+          return res.serverError(error);
+      });
+    } else {
+      return res.view("talk/speakers/add");
+    }
   }
 };
 

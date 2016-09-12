@@ -39,8 +39,7 @@ module.exports = {
     },
     speakers: {
       collection: "user",
-      via: "talks",
-      required: true
+      via: "talks"
     },
     track: {
       model: "track"
@@ -76,6 +75,54 @@ module.exports = {
                   resolve(talks[0]);
                 }
               });
+            }
+          }
+        });
+    });
+  },
+  /**
+   * Get talk speakers
+   * @param talkId
+   * @returns {Promise}
+     */
+  getSpeakers(talkId) {
+    return new Promise(function (resolve, reject) {
+      Talk.find({id: talkId})
+        .populate("speakers")
+        .exec(function (error, speakers) {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(speakers);
+          }
+        });
+    });
+  },
+  /**
+   * Add speaker to talk
+   * @param talkId
+   * @param speakerId
+   * @returns {Promise}
+     */
+  addSpeaker(talkId, speakerId) {
+    return new Promise(function (resolve, reject) {
+      Talk.findOne({id: talkId})
+        .exec(function (error, talk) {
+          if (error) {
+            reject(error);
+          } else {
+            if (talk) {
+              talk.speakers.add(speakerId);
+              talk.save(function (saveError) {
+                if (saveError) {
+                  // error
+                  reject(saveError);
+                } else {
+                  resolve(talk);
+                }
+              });
+            } else {
+              reject("talk not found");
             }
           }
         });

@@ -52,7 +52,7 @@
               <a class="sch-e_taglink" href="/user/<%= member.id%>"><%= member.name %></a>
             <%}%>
             <% if (event.isOwnedByCurrentUser(req)) { %>
-              <a class="sch-e_taglink mod-green" href="<%=req.path%>/team/adduser">+</a>
+              <a class="sch-e_taglink mod-green" href="<%=req.path%>/team/add">+</a>
             <%}%>
           </div>
         </div>
