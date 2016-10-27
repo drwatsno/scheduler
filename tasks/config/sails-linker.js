@@ -28,7 +28,6 @@
  *
  */
 module.exports = function(grunt) {
-
   grunt.config.set('sails-linker', {
     devJs: {
       options: {

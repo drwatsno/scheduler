@@ -4,42 +4,65 @@
     <title>Scheduler</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="/styles/importer.css">
-    <script data-main="/js/app.js" src="/js/require.js"></script>
   </head>
 
   <body class="sch-r">
-  <header class="sch-b_header">
-    <div class="sch-b_logo">
-      <a href="/" class="sch-b_logo--link"></a>
-    </div>
-    <div class="sch-b_menu">
 
-    </div>
-    <div class="sch-b_auth-block">
-     <% if (req.path!='/login') {%>
-        <% if (req.isAuthenticated()) { %>
-        <div class="sch-b_user-menu">
-          <div class="user-menu--user-link">
-            <a href="/logout">Logout</a>
-          </div>
-          <div class="user-menu--user-link">
-            <a href="/user"><%= req.user.name %></a>
-          </div>
-        </div>
-        <% } else { %>
-          <div class="sch-e_signup-link"><a href="/signup">Sign up</a></div>
-          <div class="sch-e_login-link"><a href="/login">Login</a></div>
-        <% } %>
-      <% } %>
-    </div>
-  </header>
-  <main class="sch-b_main">
-    <%- body %>
-  </main>
-  <footer class="sch-b_footer">
-    <div class="sch-b_footer-copylefts">
+  <scheduler-root>Loading...</scheduler-root>
+  <%- body %>
 
-    </div>
-  </footer>
+  <!--SCRIPTS-->
+  <script src="/js/dependencies/sails.io.js"></script>
+  <script src="/js/node_modules/es6-shim/es6-shim.min.js"></script>
+  <script src="/js/node_modules/reflect-metadata/Reflect.js"></script>
+  <script src="/js/node_modules/zone.js/dist/zone.js"></script>
+  <script src="/js/node_modules/systemjs/dist/system-polyfills.js"></script>
+  <script src="/js/node_modules/systemjs/dist/system.src.js"></script>
+  <script src="/js/app/app.component.js"></script>
+  <script src="/js/app/main.js"></script>
+  <!--SCRIPTS END-->
+
+  <script>
+    System.config({
+      packages: {
+        app: {
+          format: 'register',
+          defaultExtension: 'js',
+          main: 'main.js'
+        },
+        '@angular/core': {
+          main: 'bundles/core.umd.js',
+          defaultExtension: 'js'
+        },
+        '@angular/compiler': {
+          main: 'bundles/compiler.umd.js',
+          defaultExtension: 'js'
+        },
+        '@angular/common': {
+          main: 'bundles/common.umd.js',
+          defaultExtension: 'js'
+        },
+        '@angular/platform-browser-dynamic': {
+          main: 'bundles/platform-browser-dynamic.umd.js',
+          defaultExtension: 'js'
+        },
+        '@angular/platform-browser': {
+          main: 'bundles/platform-browser.umd.js',
+          defaultExtension: 'js'
+        },
+        rxjs: {
+          main: 'bundles/Rx.umd.min.js',
+          defaultExtension: 'js'
+        }
+      },
+      map: {
+        'app': 'js/app',
+        '@angular': 'js/node_modules/@angular',
+        'rxjs': 'js/node_modules/rxjs'
+      }
+    });
+    System.import('main')
+      .then(null, console.error.bind(console));
+  </script>
   </body>
 </html>

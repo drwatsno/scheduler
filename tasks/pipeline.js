@@ -11,7 +11,6 @@
  *   https://github.com/balderdashy/sails-docs/blob/master/anatomy/myApp/tasks/pipeline.js.md
  */
 
-
 // CSS files to inject in order
 //
 // (if you're using LESS with the built-in default config, you'll want
@@ -31,9 +30,16 @@ var jsFilesToInject = [
   // Dependencies like jQuery, or Angular are brought in here
   'js/dependencies/**/*.js',
 
+  // angular 2 node modules
+  'js/node_modules/es6-shim/es6-shim.min.js',
+  'js/node_modules/reflect-metadata/Reflect.js',
+  'js/node_modules/zone.js/dist/zone.js',
+  'js/node_modules/systemjs/dist/system-polyfills.js',
+  'js/node_modules/systemjs/dist/system.src.js',
+
   // All of the rest of your client-side js files
   // will be injected here in no particular order.
-  'js/**/*.js'
+  'js/app/**/*.js'
 ];
 
 
@@ -49,12 +55,6 @@ var jsFilesToInject = [
 var templateFilesToInject = [
   'templates/**/*.html'
 ];
-
-
-
-
-
-
 
 // Default path for public folder (see documentation for more information)
 var tmpPath = '.tmp/public/';
@@ -83,5 +83,3 @@ module.exports.templateFilesToInject = templateFilesToInject.map(function(tplPat
   }
   return require('path').join('assets/',tplPath);
 });
-
-

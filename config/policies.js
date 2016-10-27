@@ -50,7 +50,6 @@ module.exports.policies = {
 	// }
 
   'UserController': {
-    '*': 'isAuthenticated',
     profile: 'isAuthenticated',
     events: 'isAuthenticated',
     delete: false,

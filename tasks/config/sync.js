@@ -16,7 +16,6 @@
  *
  */
 module.exports = function(grunt) {
-
   grunt.config.set('sync', {
     dev: {
       files: [{

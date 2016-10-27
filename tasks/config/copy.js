@@ -37,7 +37,26 @@ module.exports = function(grunt) {
         src: ['**/*'],
         dest: 'www'
       }]
-    }
+    },
+    dev_angular2: {
+			files: [{
+				expand: true,
+				src: [
+				  './node_modules/es6-shim/es6-shim.min.js',
+				  './node_modules/systemjs/dist/system-polyfills.js',
+				  './node_modules/systemjs/dist/system.src.js',
+				  './node_modules/zone.js/dist/zone.js',
+				  './node_modules/reflect-metadata/Reflect.js',
+				  './node_modules/rxjs/**/*.js',
+				  './node_modules/@angular/core/bundles/core.umd.js',
+				  './node_modules/@angular/compiler/bundles/compiler.umd.js',
+				  './node_modules/@angular/common/bundles/common.umd.js',
+				  './node_modules/@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js',
+				  './node_modules/@angular/platform-browser/bundles/platform-browser.umd.js',
+				],
+				dest: '.tmp/public/js'
+			}]
+		}
   });
 
   grunt.loadNpmTasks('grunt-contrib-copy');

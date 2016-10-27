@@ -1,43 +1,78 @@
-var passport = require('passport'),
-  LocalStrategy = require('passport-local').Strategy,
-  bcrypt = require('bcrypt');
+/**
+ * Passport configuration file where you should configure strategies
+ */
+let passport = require('passport');
+let LocalStrategy = require('passport-local').Strategy;
+let JwtStrategy = require('passport-jwt').Strategy;
+let ExtractJwt = require('passport-jwt').ExtractJwt;
 
-passport.serializeUser(function(user, done) {
-  done(null, user.id);
-});
+let EXPIRES_IN_MINUTES = 60 * 24;
+let SECRET = process.env.tokenSecret || "4ukI0uIVnB3iI1yxj646fVXSE3ZVk4doZgz6fTbNg7jO41EAtl20J5F7Trtwe7OM";
+let ALGORITHM = "HS256";
+let ISSUER = "nozus.com";
+let AUDIENCE = "nozus.com";
 
-passport.deserializeUser(function(id, done) {
-  User.findOne({ id: id } , function (err, user) {
-    done(err, user);
-  });
-});
+/**
+ * Configuration object for local strategy
+ */
+let LOCAL_STRATEGY_CONFIG = {
+  usernameField: 'email',
+  passwordField: 'password',
+  passReqToCallback: false
+};
 
-passport.use(new LocalStrategy({
-    usernameField: 'email',
-    passwordField: 'password'
-  },
-  function(email, password, done) {
+/**
+ * Configuration object for JWT strategy
+ */
+let JWT_STRATEGY_CONFIG = {
+    secretOrKey: SECRET,
+    issuer : ISSUER,
+    audience: AUDIENCE,
+    passReqToCallback: false,
+    jwtFromRequest: ExtractJwt.fromAuthHeader()
+};
 
-    User.findOne({ email: email }, function (err, user) {
-      if (err) { return done(err); }
-      if (!user) {
-        return done(null, false, { message: 'Incorrect email.' });
-      }
+/**
+ * Triggers when user authenticates via local strategy
+ */
+function _onLocalStrategyAuth(email, password, next) {
+  User.findOne({email: email})
+    .exec(function (error, user) {
+      if (error) return next(error, false, {});
 
-      bcrypt.compare(password, user.password, function (err, res) {
-        if (!res)
-          return done(null, false, {
-            message: 'Invalid Password'
-          });
-        var returnUser = {
-          email: user.email,
-          createdAt: user.createdAt,
-          id: user.id
-        };
-        return done(null, returnUser, {
-          message: 'Logged In Successfully'
-        });
+      if (!user) return next(null, false, {
+        code: 'E_USER_NOT_FOUND',
+        message: email + ' is not found'
       });
+
+      // TODO: replace with new cipher service type
+      if (!CipherService.comparePassword(password, user))
+        return next(null, false, {
+          code: 'E_WRONG_PASSWORD',
+          message: 'Password is wrong'
+        });
+
+      return next(null, user, {});
     });
-  }
-));
+}
+
+/**
+ * Triggers when user authenticates via JWT strategy
+ */
+function _onJwtStrategyAuth(payload, next) {
+  let user = payload.user;
+  return next(null, user, {});
+}
+
+passport.use(
+  new LocalStrategy(LOCAL_STRATEGY_CONFIG, _onLocalStrategyAuth));
+passport.use(
+  new JwtStrategy(JWT_STRATEGY_CONFIG, _onJwtStrategyAuth));
+
+module.exports.jwtSettings = {
+  expiresIn: EXPIRES_IN_MINUTES,
+  secret: SECRET,
+  algorithm : ALGORITHM,
+  issuer : ISSUER,
+  audience : AUDIENCE
+};

@@ -5,9 +5,7 @@
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
  */
 "use strict";
-let bCrypt = require("bcrypt");
 let uuid = require("uuid");
-
 
 module.exports = {
 
@@ -98,21 +96,13 @@ module.exports = {
         });
     });
   },
-
-  beforeCreate(values, callback) {
-    bCrypt.genSalt(10, function (saltError, salt) {
-      if (saltError) {
-        callback(saltError);
-      }
-      bCrypt.hash(values.password, salt, function (hashError, hash) {
-        if (hashError) {
-          callback(hashError);
-        } else {
-          values.password = hash;
-          callback();
-        }
-      });
-    });
+  beforeUpdate: function (values, next) {
+    CipherService.hashPassword(values);
+    next();
+  },
+  beforeCreate: function (values, next) {
+    CipherService.hashPassword(values);
+    next();
   }
 };
 

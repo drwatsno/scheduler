@@ -17,6 +17,7 @@ module.exports = function(grunt) {
     'jst:dev',
     'less:dev',
     'copy:dev',
+    'copy:dev_angular2',
     'coffee:dev'
   ]);
 };
