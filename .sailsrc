@@ -1,6 +1,7 @@
 {
   "hooks": {
-    "grunt": false
+    "grunt": false,
+    "gulp": true
   },
   "generators": {
     "modules": {

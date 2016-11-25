@@ -9,7 +9,6 @@ const buffer = require("vinyl-buffer");
 const source = require("vinyl-source-stream");
 const babelify = require("babelify");
 const gutil = require("gulp-util");
-const reactify = require('reactify');
 const sourcemaps = require("gulp-sourcemaps");
 
 console.log("br");

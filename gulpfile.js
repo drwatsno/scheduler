@@ -11,7 +11,7 @@
  * Unless you know what you're doing, you shouldn't change this file.
  * Check out the `tasks` directory instead.
  */
-var gulp = require('gulp'),
+let gulp = require('gulp'),
 	plugins = require('gulp-load-plugins')({
 						pattern: ['gulp-*', 'merge-*', 'run-*', 'main-*'], // the glob to search for
 						replaceString: /\bgulp[\-.]|run[\-.]|merge[\-.]|main[\-.]/, // what to remove from the name of the module when adding it to the context
@@ -26,7 +26,7 @@ var gulp = require('gulp'),
 
 	// Load the include-all library in order to require all of our grunt
 	// configurations and task registrations dynamically.
-	var includeAll;
+	let includeAll;
 	try {
 		includeAll = require('include-all');
 	} catch (e0) {
@@ -64,27 +64,28 @@ var gulp = require('gulp'),
 	 * a single argument - the `grunt` object.
 	 */
 	function invokeConfigFn(tasks) {
-		for (var taskName in tasks) {
+		for (let taskName in tasks) {
 			if (tasks.hasOwnProperty(taskName)) {
 				tasks[taskName](gulp, plugins, growl, path);
 			}
 		}
 	}
+try {
+  // Load task functions
+  let taskConfigurations = loadTasks('./tasks-gulp/config'),
+    registerDefinitions = loadTasks('./tasks-gulp/register');
 
+  // (ensure that a default task exists)
+  if (!registerDefinitions.default) {
+    registerDefinitions.default = function (gulp) { gulp.task('default', []); };
+  }
 
-
-
-	// Load task functions
-	var taskConfigurations = loadTasks('./tasks-gulp/config'),
-		registerDefinitions = loadTasks('./tasks-gulp/register');
-
-	// (ensure that a default task exists)
-	if (!registerDefinitions.default) {
-		registerDefinitions.default = function (gulp) { gulp.task('default', []); };
-	}
-
-	// Run task functions to configure Gulp.
-	invokeConfigFn(taskConfigurations);
-	invokeConfigFn(registerDefinitions);
-
+  // Run task functions to configure Gulp.
+  invokeConfigFn(taskConfigurations);
+  invokeConfigFn(registerDefinitions);
+} catch (e) {
+  console.error("Error while loading tasks", e)
+} finally {
+  console.log("Gulp tasks load complete.")
+}
 //};
