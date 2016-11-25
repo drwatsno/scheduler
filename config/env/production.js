@@ -44,6 +44,4 @@ module.exports = {
   //   level: "silent"
   // }
 
-  csrf: true
-
 };

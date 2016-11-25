@@ -1,5 +1,5 @@
-var bcrypt = require('bcrypt-nodejs');
-var jwt = require('jsonwebtoken');
+let bcrypt = require('bcrypt-nodejs');
+let jwt = require('jsonwebtoken');
 
 module.exports = {
   secret: sails.config.jwtSettings.secret,

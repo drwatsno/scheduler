@@ -17,10 +17,10 @@ module.exports = function(gulp, plugins, growl) {
   gulp.task('sails-linker-gulp:devAssets', function() {
     // Read templates
     return gulp.src('.tmp/public/**/*.html')
-      // Link the javaScript
+    // Link the JavaScript
       .pipe(
         plugins.inject(
-          gulp.src(require('../pipeline').jsFilesToInject, {read: false}),
+          gulp.src(['.tmp/public/browserify/app.js'], {read: false}),
           {
             starttag: '<!--SCRIPTS-->',
             endtag: '<!--SCRIPTS END-->',
@@ -62,7 +62,7 @@ module.exports = function(gulp, plugins, growl) {
       // Link the javaScript
       .pipe(
         plugins.inject(
-          gulp.src(require('../pipeline').jsFilesToInject, {read: false}),
+          gulp.src(require('../pipeline').browserifyEntranceJS, {read: false}),
           {
             starttag: '<!--SCRIPTS-->',
             endtag: '<!--SCRIPTS END-->',
@@ -104,7 +104,7 @@ module.exports = function(gulp, plugins, growl) {
       // Link the JavaScript
       .pipe(
         plugins.inject(
-          gulp.src(require('../pipeline').jsFilesToInject, {read: false}),
+          gulp.src(require('../pipeline').browserifyEntranceJS, {read: false}),
           {
             starttag: '<!--SCRIPTS-->',
             endtag: '<!--SCRIPTS END-->',
@@ -146,7 +146,7 @@ module.exports = function(gulp, plugins, growl) {
       // Link the javaScript
       .pipe(
         plugins.inject(
-          gulp.src(require('../pipeline').jsFilesToInject, {read: false}),
+          gulp.src(require('../pipeline').browserifyEntranceJS, {read: false}),
           {
             starttag: '<!--SCRIPTS-->',
             endtag: '<!--SCRIPTS END-->',
@@ -188,7 +188,7 @@ module.exports = function(gulp, plugins, growl) {
       // Link the JavaScript
       .pipe(
         plugins.inject(
-          gulp.src(['.tmp/public/concat/production.min.js'], {read: false}),
+          gulp.src(['.tmp/public/browserify/app.js'], {read: false}),
           {
             starttag: '<!--SCRIPTS-->',
             endtag: '<!--SCRIPTS END-->',
@@ -230,7 +230,7 @@ module.exports = function(gulp, plugins, growl) {
       // Link the JavaScript
       .pipe(
         plugins.inject(
-          gulp.src(['.tmp/public/concat/production.min.js'], {read: false}),
+          gulp.src(['.tmp/public/browserify/app.js'], {read: false}),
           {
             starttag: '<!--SCRIPTS-->',
             endtag: '<!--SCRIPTS END-->',
@@ -272,7 +272,7 @@ module.exports = function(gulp, plugins, growl) {
       // Link the JavaScript
       .pipe(
         plugins.inject(
-          gulp.src(['.tmp/public/concat/production.min.js'], {read: false}),
+          gulp.src(['.tmp/public/browserify/app.js'], {read: false}),
           {
             starttag: '<!--SCRIPTS-->',
             endtag: '<!--SCRIPTS END-->',
@@ -314,7 +314,7 @@ module.exports = function(gulp, plugins, growl) {
       // Link the JavaScript
       .pipe(
         plugins.inject(
-          gulp.src(['.tmp/public/concat/production.min.js'], {read: false}),
+          gulp.src(['.tmp/public/browserify/app.js'], {read: false}),
           {
             starttag: '<!--SCRIPTS-->',
             endtag: '<!--SCRIPTS END-->',
