@@ -1,5 +1,6 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/bd1353f67fda4566ae3d71bffb90eb29)](https://www.codacy.com/app/dmit8815/scheduler?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=drwatsno/scheduler&amp;utm_campaign=Badge_Grade)
 #Scheduler
-
+Scheduler is nodejs app aiming to become best solution for organizing meeting/conferences :)
 To run Scheduler in production/development mode do these steps:
 
 1. Install **nodejs** and **npm**
