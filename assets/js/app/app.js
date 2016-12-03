@@ -1,59 +1,51 @@
 import React from 'react'
-import { Router, Route, Link, browserHistory, IndexRoute } from 'react-router'
+import { Router, Route, browserHistory, IndexRoute } from 'react-router'
+import { syncHistoryWithStore } from 'react-router-redux'
 import { render } from 'react-dom'
-import { Login, Signup} from './auth'
-import Index from './index'
-import About from './about'
-let socketIOClient = require('socket.io-client');
-let sailsIOClient = require('sails.io.js');
-
-// Instantiate the socket client (`io`)
-// (for now, you must explicitly pass in the socket.io client when using this library from Node.js)
-let io = sailsIOClient(socketIOClient);
-
-// Set some options:
-// (you have to specify the host and port of the Sails backend when using this library from Node.js)
-io.sails.url = 'http://localhost:1337';
+import Login  from './components/auth/login'
+import Signup from './components/auth/signup'
+import {createStore, combineReducers } from "redux";
+import {Provider} from "react-redux";
+import Index from './components/pages/index'
+import About from './components/pages/about'
+import Root from './components/layouts/root'
+import reducers from "./reducers"
+import { logIn, logOut } from "./actions"
 
 let rootElement = document.getElementById('root');
+let socketIOClient = require('socket.io-client');
+let sailsIOClient = require('sails.io.js');
+let io = sailsIOClient(socketIOClient);
+const store = createStore(combineReducers(reducers));
+
+
+io.sails.url = 'http://localhost:1337';
+
+
 class App extends React.Component {
   constructor(props) {
     super(props);
   }
 
   render() {
-    return(<div className="sch-r">
-            <header className="sch-b_header">
-                <div className="sch-b_logo">
-                  <Link className="sch-b_logo--link" to="/" activeStyle={{ color: '#FFF' }} />
-                </div>
-              <div className="sch-b_menu">
-
-              </div>
-              <div className="sch-b_auth-block">
-                <div className="sch-e_login-link">
-                  <Link to="/login" activeStyle={{ color: '#FFF' }}>Login</Link>
-                  <Link to="/signup" activeStyle={{ color: '#FFF' }}>Sign up</Link>
-                </div>
-              </div>
-            </header>
-            <main className="sch-b_main">
-              {this.props.children}
-            </main>
-            <footer className="sch-b_footer">
-              <div className="sch-b_footer-copylefts"></div>
-            </footer>
-    </div>)
+    const history = syncHistoryWithStore(browserHistory, store);
+    return(<Router history={history}>
+              <Route path="/" component={Root}>
+                <IndexRoute component={Index}/>
+                <Route path="/about" component={About}/>
+                <Route path="/login" component={Login}/>
+                <Route path="/signup" component={Signup}/>
+              </Route>
+            </Router>)
   }
 }
 
+store.subscribe(() => {
+  console.log("subscribe", store.getState())
+});
+
 render((
-  <Router history={browserHistory}>
-    <Route path="/" component={App}>
-      <IndexRoute component={Index}/>
-      <Route path="/about" component={About}/>
-      <Route path="/login" component={Login}/>
-      <Route path="/signup" component={Signup}/>
-    </Route>
-  </Router>
+  <Provider store={store}>
+    <App/>
+  </Provider>
 ), rootElement);

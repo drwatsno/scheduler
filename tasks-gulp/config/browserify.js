@@ -17,7 +17,7 @@ module.exports = function(gulp, plugins, growl) {
   gulp.task("browserify", function () {
     browserify(require("../pipeline").browserifyEntranceJS, { transform: [babelify.configure(
       {
-        presets: ["es2015", "react"],
+        presets: ["latest", "react", 'stage-2'],
         compact: true
       }
     )], debug: true })
