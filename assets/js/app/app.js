@@ -1,10 +1,11 @@
 import React from 'react'
 import { Router, Route, browserHistory, IndexRoute } from 'react-router'
+import thunk from 'redux-thunk';
 import { syncHistoryWithStore } from 'react-router-redux'
 import { render } from 'react-dom'
 import Login  from './components/auth/login'
 import Signup from './components/auth/signup'
-import {createStore, combineReducers } from "redux";
+import {createStore, combineReducers, applyMiddleware } from "redux";
 import {Provider} from "react-redux";
 import Index from './components/pages/index'
 import About from './components/pages/about'
@@ -16,7 +17,10 @@ let rootElement = document.getElementById('root');
 let socketIOClient = require('socket.io-client');
 let sailsIOClient = require('sails.io.js');
 let io = sailsIOClient(socketIOClient);
-const store = createStore(combineReducers(reducers));
+const store = createStore(
+  combineReducers(reducers),
+  applyMiddleware(thunk)
+);
 
 
 io.sails.url = 'http://localhost:1337';
