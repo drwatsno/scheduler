@@ -1,6 +1,7 @@
 import * as types from "./actionTypes"
 import io from "./io"
 import { push } from 'react-router-redux'
+import Cookie from "js-cookie"
 
 export function logIn(email, password) {
   return function(dispatch) {
@@ -10,6 +11,8 @@ export function logIn(email, password) {
         console.log(resData);
         try {
           if (!resData.message) {
+            Cookie.set("token", resData.token, {expires: resData.expires});
+            Cookie.set("user", resData.user, {expires: resData.expires});
             dispatch(logInSuccess(resData.token, resData.user));
             resolve(dispatch(push("/")));
           } else {
@@ -31,6 +34,8 @@ export function signUp(email, password) {
         console.log(resData);
         try {
           if (!resData.message) {
+            Cookie.set("token", resData.token, {expires: resData.expires});
+            Cookie.set("user", resData.user, {expires: resData.expires});
             dispatch(signUpSuccess(resData.token, resData.user));
             resolve(dispatch(push("/")));
           } else {
@@ -87,6 +92,14 @@ export function signUpError(error) {
 }
 
 export function logOut() {
+  return function (dispatch) {
+    Cookie.remove("token");
+    Cookie.remove("user");
+    return dispatch(logOutFinish());
+  }
+}
+
+export function logOutFinish() {
   return {
     type: types.AUTH_LOGOUT
   };

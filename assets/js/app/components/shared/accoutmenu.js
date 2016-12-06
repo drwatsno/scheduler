@@ -1,7 +1,7 @@
 import React, { PropTypes } from "react"
 import { Link } from 'react-router'
 import { connect } from "react-redux"
-
+import { logOut } from "../../actions"
 
 class AccountMenu extends React.Component {
   static propTypes = {
@@ -9,17 +9,22 @@ class AccountMenu extends React.Component {
     dispatch: PropTypes.func.isRequired
   };
 
+  handleLogout() {
+    const { dispatch } = this.props;
+    dispatch(logOut());
+  }
+
   constructor(props) {
-    super(props)
+    super(props);
+    this.handleLogout = this.handleLogout.bind(this);
   }
 
   render() {
     const { auth } = this.props;
-
     if (auth.isAuthenticated) {
       return (<div className="sch-b_user-menu">
                 <div className="user-menu--user-link">
-                  <Link to="/logout" activeStyle={{ color: '#FFF' }}>Logout</Link>
+                  <span className="sch-e_pseudo-link" onClick={this.handleLogout}>Logout</span>
                 </div>
                 <div className="user-menu--user-link">
                   <Link to="/user" activeStyle={{ color: '#FFF' }}>{auth.user.name}</Link>

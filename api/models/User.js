@@ -20,10 +20,7 @@ module.exports = {
     },
     name: {
       type: "string",
-      unique: true,
-      defaultsTo: function () {
-        return this.email.match(/.*(?=\@)/g)[0];
-      }
+      unique: false
     },
     password: {
       type: "string",
@@ -101,6 +98,7 @@ module.exports = {
     next();
   },
   beforeCreate: function (values, next) {
+    values.name = values.email.match(/.*(?=\@)/g)[0];
     CipherService.hashPassword(values);
     next();
   }

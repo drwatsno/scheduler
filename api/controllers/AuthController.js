@@ -20,7 +20,8 @@ function _onPassportAuth(req, res, error, user, info) {
 
   return res.ok({
     token: CipherService.createToken(user),
-    user: user
+    user,
+    expires: Math.round(sails.config.jwtSettings.expiresIn / 60 / 24 )
   });
 }
 

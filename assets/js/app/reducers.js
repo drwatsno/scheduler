@@ -1,13 +1,14 @@
 import { routerReducer } from 'react-router-redux'
 import * as types from "./actionTypes"
+import Cookie from "js-cookie"
 
 const reducers = {
   auth(state = {
-    isAuthenticated: false,
-    token: null,
+    isAuthenticated: !!Cookie.get("token") || false,
+    token: Cookie.get("token") || null,
     authActionPending: false,
     authActionError: null,
-    user: null
+    user: Cookie.getJSON("user") || null
   }, action) {
     switch (action.type) {
 
