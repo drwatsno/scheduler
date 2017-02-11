@@ -53,7 +53,7 @@ module.exports = {
   },
   /**
    * returns talk by its id
-   * @param talkId
+   * @param {Number} talkId Talk ID
    * @returns {Promise}
    */
   getTalkById(talkId) {
@@ -82,7 +82,7 @@ module.exports = {
   },
   /**
    * Get talk speakers
-   * @param talkId
+   * @param {Number} talkId Talk ID
    * @returns {Promise}
      */
   getSpeakers(talkId) {
@@ -100,8 +100,8 @@ module.exports = {
   },
   /**
    * Add speaker to talk
-   * @param talkId
-   * @param speakerId
+   * @param {Number} talkId Talk ID
+   * @param {Number} speakerId Speaker ID
    * @returns {Promise}
      */
   addSpeaker(talkId, speakerId) {

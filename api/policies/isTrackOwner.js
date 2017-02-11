@@ -1,4 +1,3 @@
-"use strict";
 module.exports = function (req, res, next) {
   let trackId = req.param("id");
   Track.findOne({id: trackId})

@@ -10,8 +10,8 @@ module.exports = {
 
   /**
    * all events
-   * @param req
-   * @param res
+   * @param {Object} req Request object
+   * @param {Object} res Response object
    */
   index(req, res) {
     Event.getAllEvents().then(function (events) {
@@ -23,8 +23,8 @@ module.exports = {
 
   /**
    * Single event
-   * @param req
-   * @param res
+   * @param {Object} req Request object
+   * @param {Object} res Response object
    */
   view(req, res) {
     let eventId = req.param("id") || null;
@@ -38,8 +38,8 @@ module.exports = {
 
   /**
    * creates event
-   * @param req
-   * @param res
+   * @param {Object} req Request object
+   * @param {Object} res Response object
    */
   create(req, res) {
     if (req.body) {
@@ -62,8 +62,8 @@ module.exports = {
 
   /**
    * Update event or show update event form
-   * @param req
-   * @param res
+   * @param {Object} req Request object
+   * @param {Object} res Response object
      */
   update(req, res) {
     if (req.body) {
@@ -95,8 +95,8 @@ module.exports = {
 
   /**
    * Delete event
-   * @param req
-   * @param res
+   * @param {Object} req Request object
+   * @param {Object} res Response object
      */
   delete(req, res) {
     if (req.body || req.param("continue")) {
@@ -137,8 +137,8 @@ module.exports = {
 
   /**
    * Manages requests to team of event
-   * @param req
-   * @param res
+   * @param {Object} req Request object
+   * @param {Object} res Response object
    */
   team(req, res) {
     let eventId = req.param("id");

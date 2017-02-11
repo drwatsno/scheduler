@@ -1,4 +1,3 @@
-"use strict";
 module.exports = function (req, res, next) {
   let talkId = req.param("id");
   Talk.findOne({id: talkId})

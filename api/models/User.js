@@ -54,6 +54,11 @@ module.exports = {
     }
   },
 
+  /**
+   * Returns user by id
+   * @param {Number} userId
+   * @return {Promise}
+   */
   getUserById(userId) {
     return new Promise(function (resolve, reject) {
       User.findOne({id: userId}).exec(function (error, user) {
@@ -66,6 +71,11 @@ module.exports = {
     });
   },
 
+  /**
+   * Returns events by user id
+   * @param {Number} userId User ID
+   * @return {Promise}
+   */
   getEventsByUserId(userId) {
     return new Promise(function (resolve, reject) {
       User.find({id: userId})
@@ -80,6 +90,11 @@ module.exports = {
     });
   },
 
+  /**
+   * Returns user events by user name
+   * @param {String} userName User name
+   * @return {Promise}
+   */
   getEventsByUserName(userName) {
     return new Promise(function (resolve, reject) {
       User.find({name: userName})
@@ -93,10 +108,22 @@ module.exports = {
         });
     });
   },
+
+  /**
+   * @private
+   * @param values
+   * @param next
+   */
   beforeUpdate: function (values, next) {
     CipherService.hashPassword(values);
     next();
   },
+
+  /**
+   * @private
+   * @param values
+   * @param next
+   */
   beforeCreate: function (values, next) {
     values.name = values.email.match(/.*(?=\@)/g)[0];
     CipherService.hashPassword(values);

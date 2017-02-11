@@ -1,8 +1,7 @@
 {
   "env" : {
     "es6": true,
-    "node": true,
-    "react": true
+    "node": true
   },
   "globals": {
     "sails": true,

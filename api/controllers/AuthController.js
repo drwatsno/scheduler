@@ -53,7 +53,11 @@ module.exports = {
       _onPassportAuth.bind(this, req, res))(req, res);
   },
 
-
+  /**
+   * Log out
+   * @param req
+   * @param res
+   */
   logout(req, res) {
     req.logout();
     res.redirect("/");

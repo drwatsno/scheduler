@@ -1,4 +1,3 @@
-"use strict";
 module.exports = function (req, res, next) {
   let eventId = req.param("id");
   Event.findOne({id: eventId})
