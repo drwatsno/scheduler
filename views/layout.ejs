@@ -3,12 +3,30 @@
   <head>
     <title>Scheduler</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="/styles/importer.css">
-    <script src="/browserify/app.js" defer></script>
+    <link rel="stylesheet" href="/js/style.css">
+    <script src="/js/bundle.js" defer></script>
+    <base href="/">
   </head>
-  <body>
-    <div id="root">
-
+  <body id="root" ng-app="appScheduler">
+    <div ng-controller="AppController as appCtrl" class="container-fluid">
+      <nav class="navbar navbar-default" ng-controller="MenuController as menuCtrl">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Scheduler</a>
+          <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+              <li ng-repeat="menuItem in menuCtrl.getByGroup('mainMenu')" ui-sref-active="active">
+                <a ui-sref="{{menuItem.name}}">{{menuItem.name}}</a>
+              </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li ng-repeat="menuItem in menuCtrl.getByGroup('userMenuAnonymous')" ui-sref-active="active">
+                <a ui-sref="{{menuItem.name}}">{{menuItem.name}}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <ui-view></ui-view>
     </div>
   </body>
 </html>

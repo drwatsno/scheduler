@@ -33,7 +33,15 @@ module.exports.webpack = {
         {
           test: /\.js$/,
           exclude: /node_modules/,
-          loader: "babel-loader"
+          loader: "babel-loader",
+          query: {
+            presets: ['es2015']
+          }
+        },
+        {
+          test: /\.json$/,
+          exclude: /node_modules/,
+          loader: "json-loader"
         },
         {
           test: /\.css$/,
