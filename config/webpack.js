@@ -55,7 +55,8 @@ module.exports.webpack = {
         {test: /\.ttf$/, loader: "file-loader"},
         {test: /\.eot$/, loader: "file-loader"},
         {test: /\.svg$/, loader: "file-loader"},
-        {test: /\.jpg$/, loader: "file-loader"}
+        {test: /\.jpg$/, loader: "file-loader"},
+        {test: /\.html$/, loader: "html-loader"}
       ],
       noParse: /angular\/angular.js/
     }

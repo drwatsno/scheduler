@@ -10,6 +10,6 @@ module.exports = {
     "url": "/login",
     "group": "userMenuAnonymous",
     "controller": "AuthController",
-    "templateUrl": "./templates/auth/index.html"
+    "template": require("./templates/auth/index.html")
   }
 };
