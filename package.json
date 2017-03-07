@@ -5,6 +5,7 @@
   "description": "a Sails application",
   "keywords": [],
   "dependencies": {
+    "angular-bootstrap-calendar": "^0.28.1",
     "bcrypt": "^1.0.2",
     "bcrypt-nodejs": "0.0.3",
     "bower": "^1.7.9",

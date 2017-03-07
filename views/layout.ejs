@@ -14,13 +14,16 @@
           <a class="navbar-brand" href="#">Scheduler</a>
           <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-              <li ng-repeat="menuItem in menuCtrl.getByGroup('mainMenu')" ui-sref-active="active">
+              <li ng-repeat="menuItem in menuCtrl.menu.mainMenu" ui-sref-active="active">
                 <a ui-sref="{{menuItem.name}}">{{menuItem.name}}</a>
               </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li ng-repeat="menuItem in menuCtrl.getByGroup('userMenuAnonymous')" ui-sref-active="active">
+              <li ng-if="!appCtrl.auth.isAuthenticated" ng-repeat="menuItem in menuCtrl.menu.userMenu" ui-sref-active="active">
                 <a ui-sref="{{menuItem.name}}">{{menuItem.name}}</a>
+              </li>
+              <li>
+                <a href="#" ng-if="appCtrl.auth.isAuthenticated" ng-click="appCtrl.auth.logOut()">Logout</a>
               </li>
             </ul>
           </div>

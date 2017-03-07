@@ -1,14 +1,22 @@
 module.exports = {
-  "homepage": {
-    "name": "homepage",
+  "calendar": {
+    "name": "calendar",
     "url": "/",
     "group": "mainMenu",
-    "template": `<h1>Welcome to Scheduler!</h1>`,
+    "controller": "CalendarController",
+    "template": require("./templates/calendar/index.html")
   },
   "login": {
     "name": "login",
     "url": "/login",
-    "group": "userMenuAnonymous",
+    "group": "userMenu",
+    "controller": "AuthController",
+    "template": require("./templates/auth/index.html")
+  },
+  "signup": {
+    "name": "signup",
+    "url": "/signup",
+    "group": "userMenu",
     "controller": "AuthController",
     "template": require("./templates/auth/index.html")
   }

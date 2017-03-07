@@ -1,0 +1,11 @@
+<div ng-controller="CalendarController as calendarCtrl" class="container-fluid">
+  <mwl-calendar
+    view="calendarCtrl.view"
+    view-date="calendarCtrl.date"
+    events="calendarCtrl.events"
+    view-title="calendarCtrl.title"
+    on-event-click="calendarCtrl.eventClicked(calendarEvent)"
+    on-event-times-changed="calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
+    cell-is-open="true">
+  </mwl-calendar>
+</div>

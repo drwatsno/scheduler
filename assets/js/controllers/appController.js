@@ -1,5 +1,8 @@
 const appScheduler = require("../app");
 
-appScheduler.controller("AppController", ["authService", "groupService", "io", function(authService, groupService, io) {
+appScheduler.controller("AppController", ["authService", function(authService) {
+  const vm = this;
+
+  vm.auth = authService;
 
 }]);

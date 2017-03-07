@@ -6,7 +6,7 @@
     <div class="col-md-4">
       <form novalidate>
         <div class="form-group row">
-          <h1 class="col-sm-12">Login</h1>
+          <h1 class="col-sm-12">{{auth.state}}</h1>
         </div>
         <div class="form-group row">
           <label for="inputEmail" class="col-sm-3 col-form-label">E-mail</label>
@@ -22,7 +22,7 @@
         </div>
         <div class="form-group row">
           <div class="offset-sm-2 col-sm-10">
-            <button ng-disabled="!(auth.creds.password && auth.creds.email)" ng-click="auth.logIn()" type="submit" class="btn btn-success">Log in</button>
+            <button ng-disabled="!(auth.creds.password && auth.creds.email)" ng-click="auth.action()" type="submit" class="btn btn-success">{{auth.state}}</button>
           </div>
         </div>
         <div class="form-group has-error row" ng-show="auth.error">

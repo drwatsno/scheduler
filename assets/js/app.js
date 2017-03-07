@@ -1,11 +1,12 @@
 const routes = require("./routes.js");
 const angular = require("angular");
 
-const appScheduler = angular.module('appScheduler', [
-  require('angular-ui-router')
+const appScheduler = angular.module("appScheduler", [
+  require("angular-ui-router"),
+  require('angular-bootstrap-calendar')
 ]);
 
-appScheduler.config(['$locationProvider', '$stateProvider', function($locationProvider, $stateProvider) {
+appScheduler.config(["$locationProvider", "$stateProvider", function($locationProvider, $stateProvider) {
   $locationProvider.html5Mode(true);
 
   Object.keys(routes).forEach(function (route) {
