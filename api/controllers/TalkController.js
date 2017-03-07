@@ -10,8 +10,8 @@ const TIME_FIELD_PATTERN = /(\d+):(\d+)/;
 module.exports = {
   /**
    * Single talk
-   * @param req
-   * @param res
+   * @param {Object} req Request object
+   * @param {Object} res Response object
    */
   view(req, res) {
     let talkId = req.param("id") || null;
@@ -24,9 +24,9 @@ module.exports = {
   },
 
   /**
-   * creates talk
-   * @param req
-   * @param res
+   * Creates talk
+   * @param {Object} req Request object
+   * @param {Object} res Response object
    */
   create(req, res) {
     if (req.body) {
@@ -60,8 +60,8 @@ module.exports = {
 
   /**
    * Update talk or show update form
-   * @param req
-   * @param res
+   * @param {Object} req Request object
+   * @param {Object} res Response object
    */
   update(req, res) {
     if (req.body) {
@@ -100,8 +100,8 @@ module.exports = {
 
   /**
    * Delete talk, show delete form or successful delete message
-   * @param req
-   * @param res
+   * @param {Object} req Request object
+   * @param {Object} res Response object
    */
   delete(req, res) {
     if (req.body || req.param("continue")) {
@@ -143,8 +143,8 @@ module.exports = {
 
   /**
    * Manages requests to speakers of talk
-   * @param req
-   * @param res
+   * @param {Object} req Request object
+   * @param {Object} res Response object
    */
   speakers(req, res) {
     let talkId = req.param("id");
@@ -158,8 +158,8 @@ module.exports = {
 
   /**
    * Adds user to talk speakers
-   * @param req
-   * @param res
+   * @param {Object} req Request object
+   * @param {Object} res Response object
    */
   speakersAddUser(req, res) {
     let talkId = req.param("id");

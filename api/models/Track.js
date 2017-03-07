@@ -47,7 +47,7 @@ module.exports = {
   },
   /**
    * returns track by its id
-   * @param trackId
+   * @param {Number} trackId Track ID
    * @returns {Promise}
    */
   getTrackById: function (trackId) {

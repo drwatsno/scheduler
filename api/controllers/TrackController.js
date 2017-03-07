@@ -8,8 +8,8 @@
 module.exports = {
   /**
    * Single track
-   * @param req
-   * @param res
+   * @param {Object} req Request object
+   * @param {Object} res Response object
    */
   view(req, res) {
     let trackId = req.param("id") || null;
@@ -20,9 +20,9 @@ module.exports = {
   },
 
   /**
-   * creates track
-   * @param req
-   * @param res
+   * Creates track
+   * @param {Object} req Request object
+   * @param {Object} res Response object
    */
   create(req, res) {
     if (req.body) {
@@ -46,8 +46,8 @@ module.exports = {
 
   /**
    * Update track or show update track form
-   * @param req
-   * @param res
+   * @param {Object} req Request object
+   * @param {Object} res Response object
    */
   update(req, res) {
     if (req.body) {
@@ -77,8 +77,8 @@ module.exports = {
 
   /**
    * Delete track, show delete form or successful delete message
-   * @param req
-   * @param res
+   * @param {Object} req Request object
+   * @param {Object} res Response object
    */
   delete(req, res) {
     if (req.body || req.param("continue")) {
@@ -91,16 +91,6 @@ module.exports = {
               type: "success",
               name: `Successfully deleted track`,
               content: `Track was successfully deleted`,
-              links: [
-                {
-                  url: `/`,
-                  name: `Return to main`
-                },
-                {
-                  url: `/user`,
-                  name: `My profile`
-                }
-              ]
             }
           }, {view: "message"});
         }

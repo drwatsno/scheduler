@@ -90,7 +90,7 @@ module.exports = {
 
   /**
    * returns event by its id
-   * @param eventId
+   * @param {Number} eventId Event ID
    * @returns {Promise}
      */
   getEventById(eventId) {
@@ -112,7 +112,7 @@ module.exports = {
 
   /**
    * returns team list objects
-   * @param eventId
+   * @param {Number} eventId Event ID
    * @returns {Promise}
      */
   getEventTeam(eventId) {
@@ -135,8 +135,8 @@ module.exports = {
 
   /**
    * Adds user to event team
-   * @param eventId
-   * @param userId
+   * @param {Number} eventId Event ID
+   * @param {Number} userId
    * @returns {Promise}
      */
   addUserToTeam(eventId, userId) {
@@ -165,8 +165,8 @@ module.exports = {
 
   /**
    * All events has one team member (owner) after create
-   * @param eventModel
-   * @param callback
+   * @param {Object} eventModel
+   * @param {Function} callback
      */
   afterCreate(eventModel, callback) {
     Event.findOne({id: eventModel.id}).exec(function (error, event) {

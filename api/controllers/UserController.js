@@ -8,8 +8,8 @@
 module.exports = {
   /**
    * Show profile of user with given id
-   * @param req
-   * @param res
+   * @param {Object} req Request object
+   * @param {Object} res Response object
      */
 	profile(req, res) {
     let userId = req.param("id") || req.user.id;
@@ -19,8 +19,8 @@ module.exports = {
   },
   /**
    * Show user's events
-   * @param req
-   * @param res
+   * @param {Object} req Request object
+   * @param {Object} res Response object
      */
   events(req, res) {
     let userName = req.param("username") || req.user.name;
