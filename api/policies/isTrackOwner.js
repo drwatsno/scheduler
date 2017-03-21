@@ -1,5 +1,6 @@
 module.exports = function (req, res, next) {
-  let trackId = req.param("id");
+  const trackId = req.param("id");
+  
   Track.findOne({id: trackId})
     .exec(function (error, track) {
       if (error) {

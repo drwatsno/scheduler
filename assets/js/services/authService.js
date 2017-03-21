@@ -5,13 +5,13 @@ appScheduler.service("authService", ["io", function (io) {
 
   const service = this;
 
-  Object.defineProperty(this, "isAuthenticated", {
+  Object.defineProperty(service, "isAuthenticated", {
       enumerable: true,
       configurable: false,
       get: () => !!cookie.get("token")
   });
 
-  Object.defineProperty(this, "token", {
+  Object.defineProperty(service, "token", {
     enumerable: true,
     get: () => cookie.get("token"),
     set: value => {
@@ -22,7 +22,7 @@ appScheduler.service("authService", ["io", function (io) {
     }
   });
 
-  Object.defineProperty(this, "user", {
+  Object.defineProperty(service, "user", {
     enumerable: true,
     get: () => cookie.getJSON("user") || null,
     set: value => {
