@@ -1,5 +1,6 @@
 module.exports = function (req, res, next) {
-  let talkId = req.param("id");
+  const talkId = req.param("id");
+
   Talk.findOne({id: talkId})
     .exec(function (error, talk) {
       if (error) {

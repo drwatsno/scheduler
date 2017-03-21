@@ -1,5 +1,6 @@
 <div ng-controller="CalendarController as calendarCtrl" class="container-fluid">
   <mwl-calendar
+    ng-if="appCtrl.auth.isAuthenticated"
     view="calendarCtrl.view"
     view-date="calendarCtrl.date"
     events="calendarCtrl.events"
@@ -8,4 +9,12 @@
     on-event-times-changed="calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
     cell-is-open="true">
   </mwl-calendar>
+  <div ng-if="!appCtrl.auth.isAuthenticated">
+    <h1>
+      Welcome to Scheduler
+    </h1>
+    <p>
+      Please login or register to see events calendar and manage them
+    </p>
+  </div>
 </div>

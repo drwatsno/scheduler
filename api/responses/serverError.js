@@ -16,9 +16,9 @@
 module.exports = function serverError (data, options) {
 
   // Get access to `req`, `res`, & `sails`
-  let req = this.req;
-  let res = this.res;
-  let sails = req._sails;
+  const req = this.req;
+  const res = this.res;
+  const sails = req._sails;
 
   // Set status code
   res.status(500);
