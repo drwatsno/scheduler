@@ -7,7 +7,7 @@ appScheduler.service("eventService", ["io", function (io) {
 
   service.getEvents = function () {
     return new Promise(function (resolve, reject) {
-      io.socket.get("/events", function (resData) {
+      io.socket.get("/event", function (resData) {
         try {
           if (!resData.message) {
             resolve(resData);

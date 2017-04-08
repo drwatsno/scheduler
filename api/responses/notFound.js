@@ -16,7 +16,7 @@
  * or route blueprints (i.e. "shadow routes", Sails will call `res.notFound()`
  * automatically.
  */
-"use strict";
+
 module.exports = function notFound (data, options) {
 
   // Get access to `req`, `res`, & `sails`

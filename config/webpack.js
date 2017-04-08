@@ -49,7 +49,7 @@ module.exports.webpack = {
         },
         {
           test: /\.less$/,
-          loader: ExtractTextPlugin.extract("style", "css!less")
+          loader: ExtractTextPlugin.extract("style", "css!less-loader")
         },
         {test: /\.(woff|woff2)$/, loader: "url-loader?limit=10000&mimetype=application/font-woff"},
         {test: /\.ttf$/, loader: "file-loader"},

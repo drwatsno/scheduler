@@ -12,7 +12,7 @@
  * automatically.
  */
 
-"use strict";
+
 module.exports = function serverError (data, options) {
 
   // Get access to `req`, `res`, & `sails`

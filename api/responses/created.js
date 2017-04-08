@@ -10,7 +10,7 @@
  * @param  {String|Object} options
  *          - pass string to render specified view
  */
-"use strict";
+
 
 module.exports = function created (data, options) {
 

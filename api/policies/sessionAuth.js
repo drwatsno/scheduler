@@ -7,7 +7,7 @@
  * @docs        :: http://sailsjs.org/#!/documentation/concepts/Policies
  *
  */
-"use strict";
+
 module.exports = function (req, res, next) {
 
   // User is allowed, proceed to the next policy,

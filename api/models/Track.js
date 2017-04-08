@@ -1,11 +1,9 @@
 /**
  * Track.js
  *
- * @description :: TODO: You might write a short summary of how this model works and what it represents here.
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
  */
-"use strict";
-let uuid = require("uuid");
+const uuid = require("uuid");
 
 module.exports = {
 
@@ -44,27 +42,6 @@ module.exports = {
     isOwnedByCurrentUser(req) {
       return !req.user ? false : this.owner.id === req.user.id;
     }
-  },
-  /**
-   * returns track by its id
-   * @param {Number} trackId Track ID
-   * @returns {Promise}
-   */
-  getTrackById: function (trackId) {
-    return new Promise(function (resolve, reject) {
-      Track.find({id: trackId})
-        .populateAll()
-        .exec(function (error, tracks) {
-          if (error) {
-            reject(error);
-          } else {
-            if (!tracks || tracks.length < 1) {
-              reject(new Error("No such track"));
-            }
-            resolve(tracks[0]);
-          }
-        });
-    });
   }
 };
 
