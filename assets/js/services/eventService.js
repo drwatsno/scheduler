@@ -8,15 +8,17 @@ appScheduler.service("eventService", ["io", function (io) {
   service.getEvents = function () {
     return new Promise(function (resolve, reject) {
       io.socket.get("/event", function (resData) {
-        try {
-          if (!resData.message) {
-            resolve(resData);
-          } else {
-            reject(resData.message);
-          }
-        } catch (error) {
-          reject(error);
+        if (!resData) {
+          resolve([]);
+          return;
         }
+
+        if (!resData.message) {
+          resolve(resData);
+          return;
+        }
+
+        reject(resData.message);
       });
     });
   };
